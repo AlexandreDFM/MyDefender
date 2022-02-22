@@ -56,9 +56,13 @@ void change_bouton_rect(sfRenderWindow *window, defender_t *defender)
 void switch_window(sfRenderWindow *window, defender_t *defender)
 {
     if (defender->event.mouseButton.type == sfEvtMouseButtonReleased
-    && defender->event.mouseButton.button == sfMouseLeft
-    && defender->valid[3] == 1)
-        sfRenderWindow_close(window);
+    && defender->event.mouseButton.button == sfMouseLeft)
+    {
+        if (defender->valid[0])
+            defender->scene = GAME;
+        if (defender->valid[3])
+            sfRenderWindow_close(window);
+    }
 }
 
 void menu(sfRenderWindow *window, defender_t *defender)
@@ -70,5 +74,4 @@ void menu(sfRenderWindow *window, defender_t *defender)
     switch_window(window, defender);
     for (int i = 0; i < 4; i++)
         display_bouton(window, defender->bouton[i]);
-    display_cursor(window, defender->cursor);
 }

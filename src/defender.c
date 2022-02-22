@@ -16,7 +16,7 @@ void close_window(sfRenderWindow *window, defender_t *defender)
 {
     if (defender->event.type == sfEvtClosed ||
     (defender->event.type == sfEvtKeyPressed &&
-    defender->event.key.code == sfKeyBackspace)) {
+    defender->event.key.code == sfKeyRShift)) {
         sfRenderWindow_close(window);
     }
 }
@@ -44,27 +44,28 @@ void first_clock(defender_t *defender)
     }
 }
 
-void boucle(sfRenderWindow *window, defender_t *defender)
+void boucle(sfRenderWindow *window, defender_t *defender, game_t *game_s)
 {
     while (sfRenderWindow_isOpen(window)) {
         while (sfRenderWindow_pollEvent(window, &defender->event)) {
             check_events(window, defender);
         }
-        if (defender->scene == INTRO) {
-            first_clock(defender);
-            intro(window, defender);
-        }
         if (defender->scene == MENU) {
             menu(window, defender);
         }
-        sfRenderWindow_display(window);
+        if (defender->scene == GAME) {
+            game(window, game_s);
+        }
+        display_cursor(window, defender->cursor);
+        if (defender->scene == INTRO) {
+            first_clock(defender);
+            intro(window, defender);
+        }sfRenderWindow_display(window);
     }
 }
 
-void display_window()
+defender_t init(void)
 {
-    sfVideoMode mode = {1920, 1080, 32};
-    sfRenderWindow *window;
     defender_t defender;
     defender.intro = create_intro("./sprites/ninja.png", (sfVector2f) {0, 0}, (sfIntRect) {0, 0, 383, 204});
     defender.menu = create_menu("./sprites/back_menu.png", (sfVector2f) {-84,0}, (sfIntRect) {0, 0, 720, 360});
@@ -76,9 +77,41 @@ void display_window()
     defender.cursor = create_cursor("./sprites/cursor.png", (sfVector2f) {0, 0}, (sfIntRect) {0, 0, 64, 64});
     defender.clockintro = sfClock_create();
     defender.scene = INTRO;
-    char *name = "Mydefender Project";
-    window = sfRenderWindow_create(mode, name, sfResize | sfClose, NULL);
-    sfRenderWindow_setFramerateLimit(window, 60);
+    return defender;
+}
+
+game_t init_textures(void)
+{
+    game_t game;
+    int i = 0;
+    char **array = my_str_to_word_array(get_lines("sprites/textures.txt"));
+    for (; array[i] != 0; i++);
+    sfTexture **t_array = malloc(sizeof(sfTexture *) * (i + 1));
+    for (int j = 0; j < i - 1; j++) {
+        t_array[j] = sfTexture_createFromFile(array[j], NULL);
+    }
+    game.t_array = t_array;
+    game.hud = sfSprite_create();
+    game.map = sfSprite_create();
+    sfSprite_setTexture(game.hud, t_array[0], sfTrue);
+    sfSprite_setTexture(game.map, t_array[1], sfTrue);
+    sfSprite_setPosition(game.map, (sfVector2f) {237, 0});
+    sfSprite_setScale(game.map, (sfVector2f) {1.259, 1.242857142857143});
+    game.map_c = sfImage_createFromFile("maps/map_test.png");
+    game.pixels = sfImage_getPixelsPtr(game.map_c);
+    game.bloon = load_bloons(&game);
+    return game;
+}
+
+void load_window()
+{
+    sfVideoMode mode = {1920, 1080, 32};
+    sfRenderWindow *window;
+    defender_t defender = init();
+    game_t game = init_textures();
+    char *name = "My_defender Project";
+    window = sfRenderWindow_create(mode, name, sfFullscreen | sfClose, NULL);
+    sfRenderWindow_setFramerateLimit(window, 300);
     sfRenderWindow_setMouseCursorVisible (window, sfFalse);
-    boucle(window, &defender);
+    boucle(window, &defender, &game);
 }

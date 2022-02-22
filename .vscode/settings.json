@@ -1,0 +1,18 @@
+{
+    "files.associations": {
+        "*.c": "c",
+        "my_runner.h": "c",
+        "*.tcc": "c",
+        "string": "c",
+        "istream": "c",
+        "streambuf": "c",
+        "bit": "c",
+        "functional": "c",
+        "random": "c",
+        "limits": "c",
+        "numeric": "c",
+        "my_defender.h": "c"
+    },
+    "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs":"active"
+}
