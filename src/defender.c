@@ -76,7 +76,7 @@ defender_t init(void)
     defender.bouton[3] = create_bouton("./sprites/menu_buttons.png", (sfVector2f) {805, 400 + 159 * 2}, (sfIntRect) {0, 129, 159, 43});
     defender.cursor = create_cursor("./sprites/cursor.png", (sfVector2f) {0, 0}, (sfIntRect) {0, 0, 64, 64});
     defender.clockintro = sfClock_create();
-    defender.scene = INTRO;
+    defender.scene = GAME;
     return defender;
 }
 
@@ -100,6 +100,20 @@ game_t init_textures(void)
     game.map_c = sfImage_createFromFile("maps/map_test.png");
     game.pixels = sfImage_getPixelsPtr(game.map_c);
     game.bloon = load_bloons(&game);
+    game.head = game.bloon;
+    for (int i = 0; i < 100; i++) {
+        fill_bloons(&game);
+    }
+    game.bloon = game.head;
+    sfVector3f colors[4] = {{0, 51, 255}, {0, 255, 72}, {197, 0, 0}, {158, 0, 197}};
+    sfVector2f dirs[4] = {{0,1}, {-1, 0}, {1, 0}, {0, -1}};
+    game.colors = malloc(sizeof(sfVector3f) * 5);
+    game.dirs = malloc(sizeof(sfVector2f) * 5);
+    for (int i = 0; i < 4; i++) {
+        game.colors[i] = colors[i];
+        game.dirs[i] = dirs[i];
+    }
+    game.frame = (sfFloatRect) {237, 0, 1259, 870};
     return game;
 }
 

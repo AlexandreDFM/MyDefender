@@ -86,16 +86,21 @@ typedef struct bloons
     sfVector2f dir;
     sfVector2f pos;
     sfSprite *sprite;
+    struct bloons *prev;
     struct bloons *next;
 }bloons_t;
 
 typedef struct game {
-    bloons_t bloon;
+    bloons_t *head;
+    bloons_t *bloon;
     sfTexture **t_array;
     sfSprite *hud;
     sfSprite *map;
     sfImage *map_c;
     sfUint8 *pixels;
+    sfVector3f *colors;
+    sfVector2f *dirs;
+    sfFloatRect frame;
 }game_t;
 
 typedef struct defender {
@@ -112,7 +117,8 @@ typedef struct defender {
 
 void load_window();
 int my_atoi(char const *str);
-bloons_t load_bloons(game_t *game);
+game_t *fill_bloons(game_t *game);
+bloons_t *load_bloons(game_t *game);
 char *get_lines(char const *filepath);
 char **my_str_to_word_array(char *str);
 void game(sfRenderWindow *win, game_t *game_s);
