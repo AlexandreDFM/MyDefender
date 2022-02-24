@@ -93,6 +93,7 @@ typedef struct bloons
 typedef struct game {
     bloons_t *head;
     bloons_t *bloon;
+    char **waves;
     sfTexture **t_array;
     sfSprite *hud;
     sfSprite *map;
@@ -116,14 +117,18 @@ typedef struct defender {
 }defender_t;
 
 void load_window();
+char *my_strdup(char *src);
 int my_atoi(char const *str);
 game_t *fill_bloons(game_t *game);
 bloons_t *load_bloons(game_t *game);
 char *get_lines(char const *filepath);
 char **my_str_to_word_array(char *str);
+char *my_strcpy(char *dest, char const *src);
 void game(sfRenderWindow *win, game_t *game_s);
+void *my_memset(void *dest, int value, int length);
 void display_menu(sfRenderWindow *window, menu_t menu);
 void menu(sfRenderWindow *window, defender_t *defender);
+game_t *check_pos(game_t *game, sfRenderWindow *window);
 void display_intro(sfRenderWindow *window, intro_t intro);
 void display_title(sfRenderWindow *window, title_t title);
 void display_bouton(sfRenderWindow *window, bouton_t bouton);
@@ -133,4 +138,3 @@ intro_t create_intro(char *tpath, sfVector2f pos, sfIntRect rect);
 title_t create_title(char *tpath, sfVector2f pos, sfIntRect rect);
 bouton_t create_bouton(char *tpath, sfVector2f pos, sfIntRect rect);
 cursor_t create_cursor(char *tpath, sfVector2f pos, sfIntRect rect);
-game_t *check_pos(game_t *game, sfRenderWindow *window);

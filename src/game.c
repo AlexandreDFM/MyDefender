@@ -21,6 +21,5 @@ void game(sfRenderWindow *win, game_t *game_s)
         game_s->bloon->pos.y += game_s->bloon->dir.y;
         game_s->bloon = game_s->bloon->next;
     }
-    // usleep(5000);
     game_s->bloon = game_s->head;
 }

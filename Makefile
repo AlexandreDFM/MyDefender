@@ -23,6 +23,9 @@ SRC    = main.c								\
 		src/check_map.c						\
 		src/load_bloons.c					\
 		src/my_atoi.c						\
+		src/my_memset.c						\
+		src/my_strdup.c						\
+		src/my_strcpy.c						\
 
 OBJ    = $(SRC:.c=.o)
 
