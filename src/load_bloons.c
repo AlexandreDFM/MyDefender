@@ -7,20 +7,19 @@
 
 #include "my_defender.h"
 
-game_t *fill_bloons(game_t *game)
+void fill_bloons(game_t *game)
 {
     bloons_t *obj = malloc(sizeof(bloons_t));
     bloons_t *last = game->bloon;
     while (last->next != NULL) last = last->next;
     obj->prev = last;
     obj->sprite = sfSprite_create();
-    obj->pos = (sfVector2f) { last->pos.x, last->pos.y - 50};
+    obj->pos = (sfVector2f) { last->pos.x, last->pos.y - 30};
     sfSprite_setTexture(obj->sprite, game->t_array[2], sfTrue);
     sfSprite_setOrigin(obj->sprite, (sfVector2f) {21, 27});
-    sfSprite_setTextureRect(obj->sprite, (sfIntRect) {0, 0, 42, 54});
+    // sfSprite_setTextureRect(obj->sprite, (sfIntRect) {0, 0, 42, 54});
     obj->dir = game->bloon->dir;
     obj->next = NULL;
-    obj->t_type = last->t_type + 1;
     last->next = obj;
 }
 
@@ -37,6 +36,5 @@ bloons_t *load_bloons(game_t *game)
     obj->dir = (sfVector2f) {my_atoi(positions[7]), my_atoi(positions[8])};
     obj->prev = NULL;
     obj->next = NULL;
-    obj->t_type = 1;
     return obj;
 }

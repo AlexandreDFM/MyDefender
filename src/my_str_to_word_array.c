@@ -5,9 +5,11 @@
 ** my_str_to_word_array
 */
 
+#include "my_defender.h"
+
 int is_valid(char c)
 {
-    if (c == '\n' || c == '\t' || c == ':') return 0;
+    if (c == '\n' || c == '\t' || c == ':' || c == '|') return 0;
     return 1;
 }
 
@@ -51,7 +53,6 @@ char **my_str_to_word_array(char const *str)
     int word_array_length = count_str_split(str);
     int last_word = my_count_non_alpha(0, str);
     char **my_array = malloc(sizeof(char*) * (word_array_length + 1));
-    if (!my_array) exit(84);
     for (int i = 0; i < word_array_length; i++) {
         int word_len = my_word_length(str, last_word);
         my_array[i] = malloc(sizeof(char) * (word_len + 1));

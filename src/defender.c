@@ -102,10 +102,9 @@ game_t init_textures(void)
     game.pixels = sfImage_getPixelsPtr(game.map_c);
     game.bloon = load_bloons(&game);
     game.head = game.bloon;
-    for (int i = 0; i < 100; i++) {
-        fill_bloons(&game);
-    }
-    game.bloon = game.head;
+    // for (int i = 0; i < 100; i++) {
+    //     fill_bloons(&game);
+    // }
     sfVector3f colors[4] = {{0, 51, 255}, {0, 255, 72}, {197, 0, 0}, {158, 0, 197}};
     sfVector2f dirs[4] = {{0,1}, {-1, 0}, {1, 0}, {0, -1}};
     game.colors = malloc(sizeof(sfVector3f) * 5);
@@ -115,27 +114,13 @@ game_t init_textures(void)
         game.dirs[i] = dirs[i];
     }
     game.frame = (sfFloatRect) {237, 0, 1259, 870};
+    game.wave_nb = 1;
+    game.wave_ind = 35;
+    game.waves = init_waves();
+    game.b_colors = "RBGYW";
+    fill_waves(&game);
+    game.bloon = game.head;
     return game;
-}
-
-
-game_t init_waves(void)
-{
-    int i = 1, wave = 0, j = 0;
-    int count = 1;
-    char **tmp = my_str_to_word_array(get_lines("maps/wave"));
-    for (; tmp[i] != NULL; i++);
-    char ***waves = malloc(sizeof(char **) * i);
-    my_memset(waves, 0, i);
-    for (; tmp[j] != 0; j++) {
-        for (int index = 0; tmp[j][index] != '\0'; index++) {
-            if (tmp[j][index] == '|') count++;
-        }
-        waves[wave] = malloc(sizeof(char *) * count);
-        if (my_strcmp(tmp[j], "\n") == 0) wave++;
-        waves[wave][j] = my_strdup(tmp[j]);
-    }
-    waves[wave] = 0;
 }
 
 void load_window()
@@ -144,7 +129,6 @@ void load_window()
     sfRenderWindow *window;
     defender_t defender = init();
     game_t game = init_textures();
-    init_waves();
     char *name = "My_defender Project";
     window = sfRenderWindow_create(mode, name, sfFullscreen | sfClose, NULL);
     sfRenderWindow_setFramerateLimit(window, 300);

@@ -26,10 +26,12 @@ SRC    = main.c								\
 		src/my_memset.c						\
 		src/my_strdup.c						\
 		src/my_strcpy.c						\
+		src/waves.c							\
+		src/bloons_color.c					\
 
 OBJ    = $(SRC:.c=.o)
 
-CFLAGS += -Wall -Wextra -pedantic -I./include -g3
+CFLAGS += -Wall -pedantic -I./include -g3
 
 LIBFLAG    = -L ./lib/my/ -lmy -I ./include -g3 -lcsfml-graphics 		\
 -lcsfml-window -lcsfml-system -lcsfml-audio								\

@@ -36,6 +36,15 @@ enum scene_t {
     TRANSITIONMENU,
 };
 
+enum c_bloons_t {
+    RED,
+    BLUE,
+    GREEN,
+    YELLOW,
+    RAINBOW,
+    MOAB,
+};
+
 typedef struct intro {
     sfSprite *sprite;
     sfTexture *texture;
@@ -80,7 +89,6 @@ typedef struct bloons
 {
     int type;
     int speed;
-    int t_type;
     int health;
     int damage;
     sfVector2f dir;
@@ -94,6 +102,9 @@ typedef struct game {
     bloons_t *head;
     bloons_t *bloon;
     char **waves;
+    char *b_colors;
+    int wave_nb;
+    int wave_ind;
     sfTexture **t_array;
     sfSprite *hud;
     sfSprite *map;
@@ -117,18 +128,24 @@ typedef struct defender {
 }defender_t;
 
 void load_window();
+char **init_waves(void);
 char *my_strdup(char *src);
 int my_atoi(char const *str);
-game_t *fill_bloons(game_t *game);
+void fill_waves(game_t *game);
+void red_bloons(bloons_t *obj);
+void blue_bloons(bloons_t *obj);
+void green_bloons(bloons_t *obj);
+void yellow_bloons(bloons_t *obj);
+void fill_bloons(game_t *game);
 bloons_t *load_bloons(game_t *game);
 char *get_lines(char const *filepath);
-char **my_str_to_word_array(char *str);
+char **my_str_to_word_array(char const *str);
 char *my_strcpy(char *dest, char const *src);
 void game(sfRenderWindow *win, game_t *game_s);
 void *my_memset(void *dest, int value, int length);
 void display_menu(sfRenderWindow *window, menu_t menu);
 void menu(sfRenderWindow *window, defender_t *defender);
-game_t *check_pos(game_t *game, sfRenderWindow *window);
+void check_pos(game_t *game, sfRenderWindow *window);
 void display_intro(sfRenderWindow *window, intro_t intro);
 void display_title(sfRenderWindow *window, title_t title);
 void display_bouton(sfRenderWindow *window, bouton_t bouton);

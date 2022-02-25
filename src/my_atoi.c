@@ -5,6 +5,8 @@
 ** my_atoi
 */
 
+#include "my_defender.h"
+
 int my_atoi(char const *str)
 {
     int i = 0, result = 0, check = 1;

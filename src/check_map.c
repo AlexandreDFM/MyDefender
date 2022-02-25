@@ -7,7 +7,7 @@
 
 #include "my_defender.h"
 
-game_t *check_pos(game_t *game, sfRenderWindow *window)
+void check_pos(game_t *game, sfRenderWindow *window)
 {
     unsigned long long int coords = ((game->bloon->pos.x +
     (game->bloon->dir.x * - 1) * 50) * 4) + ((game->bloon->pos.y +
