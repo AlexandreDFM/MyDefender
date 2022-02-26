@@ -35,6 +35,6 @@ char **init_waves(void)
 {
     int i = 1, wave = 0, j = 0;
     int count = 1;
-    char **tmp = my_str_to_word_array(get_lines("maps/wave"));
+    char **tmp = my_strtwa(get_lines("maps/wave"), "|\n");
     return tmp;
 }

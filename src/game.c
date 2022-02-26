@@ -11,7 +11,7 @@ void game(sfRenderWindow *win, game_t *game_s)
 {
     sfRenderWindow_drawSprite(win, game_s->map, NULL);
     sfRenderWindow_drawSprite(win, game_s->hud, NULL);
-    while(game_s->bloon->next != NULL) {
+    while (game_s->bloon->next != NULL) {
         if (sfFloatRect_contains(&game_s->frame, game_s->bloon->pos.x, game_s->bloon->pos.y)){
             sfRenderWindow_drawSprite(win, game_s->bloon->sprite, NULL);
             sfSprite_setPosition(game_s->bloon->sprite, game_s->bloon->pos);

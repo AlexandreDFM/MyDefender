@@ -45,6 +45,14 @@ enum c_bloons_t {
     MOAB,
 };
 
+typedef struct game_object {
+    sfSprite *sprite;
+    sfTexture *texture;
+    sfVector2f pos;
+    sfIntRect rect;
+    sfVector2f resize;
+}go_t;
+
 typedef struct intro {
     sfSprite *sprite;
     sfTexture *texture;
@@ -70,6 +78,7 @@ typedef struct menu {
 }menu_t;
 
 typedef struct bouton {
+    int clicked;
     sfSprite *sprite;
     sfTexture *texture;
     sfVector2f pos;
@@ -109,7 +118,7 @@ typedef struct game {
     sfSprite *hud;
     sfSprite *map;
     sfImage *map_c;
-    sfUint8 *pixels;
+    const sfUint8 *pixels;
     sfVector3f *colors;
     sfVector2f *dirs;
     sfFloatRect frame;
@@ -117,20 +126,25 @@ typedef struct game {
 
 typedef struct defender {
     enum scene_t scene;
-    intro_t intro;
-    cursor_t cursor;
-    title_t title;
-    menu_t menu;
     int valid[4];
+    go_t intro;
+    go_t title;
+    go_t menu;
+    cursor_t cursor;
     bouton_t bouton[4];
     sfEvent event;
     sfClock *clockintro;
 }defender_t;
 
-void load_window();
-char **init_waves(void);
 char *my_strdup(char *src);
 int my_atoi(char const *str);
+char *my_strcpy(char *dest, char const *src);
+char **my_strtwa(char const *str, char *limit);
+void *my_memset(void *dest, int value, int length);
+void load_window();
+defender_t init(void);
+game_t init_textures(void);
+char **init_waves(void);
 void fill_waves(game_t *game);
 void red_bloons(bloons_t *obj);
 void blue_bloons(bloons_t *obj);
@@ -139,19 +153,19 @@ void yellow_bloons(bloons_t *obj);
 void fill_bloons(game_t *game);
 bloons_t *load_bloons(game_t *game);
 char *get_lines(char const *filepath);
-char **my_str_to_word_array(char const *str);
-char *my_strcpy(char *dest, char const *src);
 void game(sfRenderWindow *win, game_t *game_s);
-void *my_memset(void *dest, int value, int length);
 void display_menu(sfRenderWindow *window, menu_t menu);
 void menu(sfRenderWindow *window, defender_t *defender);
 void check_pos(game_t *game, sfRenderWindow *window);
+void intro(sfRenderWindow *window, defender_t *defender);
 void display_intro(sfRenderWindow *window, intro_t intro);
 void display_title(sfRenderWindow *window, title_t title);
 void display_bouton(sfRenderWindow *window, bouton_t bouton);
 void display_cursor(sfRenderWindow *window, cursor_t cursor);
+void display_go(sfRenderWindow *w, go_t go);
 menu_t create_menu(char *tpath, sfVector2f pos, sfIntRect rect);
 intro_t create_intro(char *tpath, sfVector2f pos, sfIntRect rect);
 title_t create_title(char *tpath, sfVector2f pos, sfIntRect rect);
 bouton_t create_bouton(char *tpath, sfVector2f pos, sfIntRect rect);
 cursor_t create_cursor(char *tpath, sfVector2f pos, sfIntRect rect);
+go_t create_go(char *tpath, sfVector2f pos, sfIntRect hitbox, sfVector2f size);
