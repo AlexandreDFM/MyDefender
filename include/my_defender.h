@@ -156,7 +156,6 @@ char *my_strcpy(char *dest, char const *src);
 char **my_strtwa(char const *str, char *limit);
 void game(sfRenderWindow *win, game_t *game_s);
 void *my_memset(void *dest, int value, int length);
-void check_pos(game_t *game, sfRenderWindow *window);
 void display_menu(sfRenderWindow *window, menu_t menu);
 void menu(sfRenderWindow *window, defender_t *defender);
 void intro(sfRenderWindow *window, defender_t *defender);
