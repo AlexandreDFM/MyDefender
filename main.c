@@ -15,6 +15,5 @@ int main(int argc, char **argv)
     } else if (argc == 1) {
         load_window();
     }
-    my_printf("tazra");
-    return (0);
+    return 0;
 }
