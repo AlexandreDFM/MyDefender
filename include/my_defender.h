@@ -7,19 +7,19 @@
 
 #include "my.h"
 #include "printf.h"
-#include <SFML/Graphics.h>
-#include<fcntl.h>
+#include "colors.h"
+#include <fcntl.h>
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <time.h>
 #include <string.h>
-#include <SFML/System.h>
 #include <SFML/Window.h>
+#include <SFML/System.h>
+#include <SFML/Graphics.h>
 #include <SFML/Audio.h>
 #include <math.h>
-#include "colors.h"
 
 #pragma once
 
@@ -45,6 +45,16 @@ enum c_bloons_t {
     MOAB,
 };
 
+enum type_monkey_t {
+    DARTMONKEY,
+    GLUEGUNNER,
+    NINJA,
+    SPIKEFACTORY,
+    SUPERMONKEY,
+    ICEMONKEY,
+    BOMBSHOOTER,
+};
+
 typedef struct game_object {
     sfSprite *sprite;
     sfTexture *texture;
@@ -52,30 +62,6 @@ typedef struct game_object {
     sfIntRect rect;
     sfVector2f resize;
 }go_t;
-
-typedef struct intro {
-    sfSprite *sprite;
-    sfTexture *texture;
-    sfVector2f pos;
-    sfIntRect rect;
-    sfVector2f resize;
-}intro_t;
-
-typedef struct title {
-    sfSprite *sprite;
-    sfTexture *texture;
-    sfVector2f pos;
-    sfIntRect rect;
-    sfVector2f resize;
-}title_t;
-
-typedef struct menu {
-    sfSprite *sprite;
-    sfTexture *texture;
-    sfVector2f pos;
-    sfIntRect rect;
-    sfVector2f resize;
-}menu_t;
 
 typedef struct bouton {
     int clicked;
@@ -106,6 +92,20 @@ typedef struct bloons
     struct bloons *prev;
     struct bloons *next;
 }bloons_t;
+
+typedef struct monkey {
+    int type;
+    int damage;
+    int lvl1;
+    int lvl2;
+    sfSprite *sprite;
+    sfTexture *texture;
+    sfVector2f pos;
+    sfIntRect hitbox;
+    sfVector2f resize;
+    struct monkey *prev;
+    struct monkey *next;
+}monkey_t;
 
 typedef struct game {
     bloons_t *head;
@@ -154,18 +154,12 @@ void fill_bloons(game_t *game);
 bloons_t *load_bloons(game_t *game);
 char *get_lines(char const *filepath);
 void game(sfRenderWindow *win, game_t *game_s);
-void display_menu(sfRenderWindow *window, menu_t menu);
 void menu(sfRenderWindow *window, defender_t *defender);
 void check_pos(game_t *game, sfRenderWindow *window);
 void intro(sfRenderWindow *window, defender_t *defender);
-void display_intro(sfRenderWindow *window, intro_t intro);
-void display_title(sfRenderWindow *window, title_t title);
 void display_bouton(sfRenderWindow *window, bouton_t bouton);
 void display_cursor(sfRenderWindow *window, cursor_t cursor);
 void display_go(sfRenderWindow *w, go_t go);
-menu_t create_menu(char *tpath, sfVector2f pos, sfIntRect rect);
-intro_t create_intro(char *tpath, sfVector2f pos, sfIntRect rect);
-title_t create_title(char *tpath, sfVector2f pos, sfIntRect rect);
 bouton_t create_bouton(char *tpath, sfVector2f pos, sfIntRect rect);
 cursor_t create_cursor(char *tpath, sfVector2f pos, sfIntRect rect);
 go_t create_go(char *tpath, sfVector2f pos, sfIntRect hitbox, sfVector2f size);
