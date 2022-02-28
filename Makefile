@@ -42,7 +42,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@make -C ./lib/my
-	@$(CC) $(SRC) -o $(NAME) $(LIBFLAG)
+	@$(CC) $(SRC) -o $(NAME) $(LIBFLAG) -lm
 
 clean:
 	@$(RM) $(OBJ)

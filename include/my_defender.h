@@ -97,7 +97,7 @@ typedef struct cursor {
 typedef struct bloons
 {
     int type;
-    int speed;
+    float speed;
     int health;
     int damage;
     sfVector2f dir;

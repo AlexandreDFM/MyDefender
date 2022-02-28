@@ -24,7 +24,7 @@ defender_t init(void)
     defender.cursor = create_cursor("./sprites/cursor.png",
     (sfVector2f) {0, 0}, (sfIntRect) {0, 0, 64, 64});
     defender.clockintro = sfClock_create();
-    defender.scene = INTRO;
+    defender.scene = GAME;
     return defender;
 }
 
@@ -60,7 +60,7 @@ game_t init_textures(void)
     }
     game.frame = (sfFloatRect) {237, 0, 1359, 970};
     game.wave_nb = 1;
-    game.wave_ind = 35;
+    game.wave_ind = 0;
     game.waves = init_waves();
     game.b_colors = "RBGYW";
     fill_waves(&game);

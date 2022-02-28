@@ -9,15 +9,14 @@
 
 void check_pos(game_t *game, sfRenderWindow *window)
 {
-    unsigned long long int coords = ((game->bloon->pos.x +
-    (game->bloon->dir.x * - 1) * 50) * 4) + ((game->bloon->pos.y +
+    unsigned long long int coords = ((roundf(game->bloon->pos.x) +
+    (game->bloon->dir.x * - 1) * 50) * 4) + ((roundf(game->bloon->pos.y) +
     (game->bloon->dir.y * - 1) * 50) * 4 * 1920);
     if (coords >= 0 && coords <= 2147483647) {
         sfVector3f color = (sfVector3f) {game->pixels[coords],
         game->pixels[coords + 1], game->pixels[coords + 2]};
         if (color.x == game->colors[4].x && color.y ==
             game->colors[4].y && color.z == game->colors[4].z) {
-            my_printf("DEL\n");
             delete_bloon(game);
             return;
         }
