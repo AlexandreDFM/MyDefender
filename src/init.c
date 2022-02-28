@@ -49,19 +49,16 @@ game_t init_textures(void)
     game.pixels = sfImage_getPixelsPtr(game.map_c);
     game.bloon = load_bloons(&game);
     game.head = game.bloon;
-    // for (int i = 0; i < 100; i++) {
-    //     fill_bloons(&game);
-    // }
-    sfVector3f colors[4] = {{0, 51, 255}, {0, 255, 72},
-    {197, 0, 0}, {158, 0, 197}};
-    sfVector2f dirs[4] = {{0,1}, {-1, 0}, {1, 0}, {0, -1}};
-    game.colors = malloc(sizeof(sfVector3f) * 5);
-    game.dirs = malloc(sizeof(sfVector2f) * 5);
-    for (int i = 0; i < 4; i++) {
+    sfVector3f colors[5] = {{0, 51, 255}, {0, 255, 72},
+    {197, 0, 0}, {158, 0, 197}, {255, 106, 0}};
+    sfVector2f dirs[5] = {{0,1}, {-1, 0}, {1, 0}, {0, -1}, {}};
+    game.colors = malloc(sizeof(sfVector3f) * 6);
+    game.dirs = malloc(sizeof(sfVector2f) * 6);
+    for (int i = 0; i < 5; i++) {
         game.colors[i] = colors[i];
         game.dirs[i] = dirs[i];
     }
-    game.frame = (sfFloatRect) {237, 0, 1259, 870};
+    game.frame = (sfFloatRect) {237, 0, 1359, 970};
     game.wave_nb = 1;
     game.wave_ind = 35;
     game.waves = init_waves();

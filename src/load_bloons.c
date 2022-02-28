@@ -17,7 +17,6 @@ void fill_bloons(game_t *game)
     obj->pos = (sfVector2f) {last->pos.x, last->pos.y - 30};
     sfSprite_setTexture(obj->sprite, game->t_array[2], sfTrue);
     sfSprite_setOrigin(obj->sprite, (sfVector2f) {21, 27});
-    // sfSprite_setTextureRect(obj->sprite, (sfIntRect) {0, 0, 42, 54});
     obj->dir = game->bloon->dir;
     obj->next = NULL;
     last->next = obj;
@@ -37,4 +36,15 @@ bloons_t *load_bloons(game_t *game)
     obj->prev = NULL;
     obj->next = NULL;
     return obj;
+}
+
+void delete_bloon(game_t *game)
+{
+    bloons_t *tmp = game->bloon;
+    if (game->bloon == NULL) return;
+    if (game->bloon == game->head) game->head = game->bloon->next;
+    if (game->bloon->next != NULL) game->bloon->next->prev = game->bloon->prev;
+    if (game->bloon->prev != NULL) game->bloon->prev->next = game->bloon->next;
+    game->bloon = game->bloon->next;
+    free(tmp);
 }
