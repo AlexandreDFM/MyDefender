@@ -65,5 +65,18 @@ game_t init_textures(void)
     game.b_colors = "RBGYW";
     fill_waves(&game);
     game.bloon = game.head;
+    game.font = sfFont_createFromFile("sprites/font.ttf");
+    game.score = 0;
+    game.health = 100;
+    game.h = sfText_create();
+    game.sc = sfText_create();
+    game.wav = sfText_create();
+    sfText_setFont(game.h, game.font);
+    sfText_setFont(game.sc, game.font);
+    sfText_setFont(game.wav, game.font);
+    sfText_setPosition(game.sc, (sfVector2f) {1570, 33});
+    sfText_setPosition(game.h, (sfVector2f) {1570, 88});
+    sfText_setCharacterSize(game.sc, 48);
+    sfText_setCharacterSize(game.h, 48);
     return game;
 }

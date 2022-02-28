@@ -30,6 +30,7 @@ SRC    = main.c								\
 		src/utils/my_strdup.c				\
 		src/utils/my_strcpy.c				\
 		src/utils/my_strtwa.c				\
+		src/utils/my_itoa.c					\
 
 OBJ    = $(SRC:.c=.o)
 

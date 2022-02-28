@@ -114,10 +114,16 @@ typedef struct game {
     char *b_colors;
     int wave_nb;
     int wave_ind;
+    int score;
+    int health;
     sfTexture **t_array;
     sfSprite *hud;
     sfSprite *map;
     sfImage *map_c;
+    sfFont *font;
+    sfText *sc;
+    sfText *wav;
+    sfText *h;
     const sfUint8 *pixels;
     sfVector3f *colors;
     sfVector2f *dirs;
@@ -138,6 +144,7 @@ typedef struct defender {
 
 void load_window();
 defender_t init(void);
+char *my_itoa(int num);
 char **init_waves(void);
 char *my_strdup(char *src);
 game_t init_textures(void);

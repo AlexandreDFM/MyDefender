@@ -7,6 +7,14 @@
 
 #include "my_defender.h"
 
+void draw_score(game_t *game, sfRenderWindow *win)
+{
+    sfText_setString(game->sc, my_itoa(game->score));
+    sfText_setString(game->h, my_itoa(game->health));
+    sfRenderWindow_drawText(win, game->sc, NULL);
+    sfRenderWindow_drawText(win, game->h, NULL);
+}
+
 void game(sfRenderWindow *win, game_t *game_s)
 {
     sfRenderWindow_drawSprite(win, game_s->map, NULL);
@@ -21,5 +29,6 @@ void game(sfRenderWindow *win, game_t *game_s)
         game_s->bloon = game_s->bloon->next;
     }
     sfRenderWindow_drawSprite(win, game_s->hud, NULL);
+    draw_score(game_s, win);
     game_s->bloon = game_s->head;
 }
