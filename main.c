@@ -9,7 +9,7 @@
 
 int main(int argc, char **argv)
 {
-    srand(time(NULL));
+    srand(0);
     if (argc == 2 && my_strlen(argv[1]) == 2 && argv[1][0] == '-'
     && argv[1][1] == 'h') {
     } else if (argc == 1) {

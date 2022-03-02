@@ -46,3 +46,43 @@ void menu(sfRenderWindow *window, defender_t *defender)
     for (int i = 0; i < 4; i++)
         display_bouton(window, defender->bouton[i]);
 }
+
+void ig_but(game_t *game, defender_t *defender, sfRenderWindow *win)
+{
+    sfVector2i pos = sfMouse_getPositionRenderWindow(win);
+    defender->cursor.pos.x = pos.x;
+    defender->cursor.pos.y = pos.y;
+    for (int i = 0; i < 2; i++) {
+        sfFloatRect rect = sfSprite_getGlobalBounds(game->p_but[i].sprite);
+        if (sfFloatRect_contains(&rect, pos.x, pos.y)) {
+            game->p_but[i].clicked = 1;
+        } else game->p_but[i].clicked = 0;
+        if (game->p_but[i].clicked == 1) {
+            sfSprite_setScale(game->p_but[i].sprite, (sfVector2f) {0.6, 0.6});
+        } else {
+            sfSprite_setScale(game->p_but[i].sprite, (sfVector2f) {0.5, 0.5});
+        }
+        if (game->p_but[i].clicked == 1 &&
+        sfMouse_isButtonPressed(sfMouseLeft) &&
+        defender->playing == 0) {
+            if (defender->state == 4) fill_waves(game);
+            defender->state = 1;
+            defender->playing = 1;
+            game->p_but[i].rect.left = 126;
+            sfSprite_setTextureRect(game->p_but[i].sprite, game->p_but[i].rect);
+        }
+        if (game->p_but[i].clicked == 1 && sfMouse_isButtonPressed(sfMouseLeft)
+        && defender->playing == 1 && defender->state == 0) {
+            defender->state = 3;
+        }
+        if (defender->state != 0 && defender->event.type ==
+        sfEvtMouseButtonReleased && defender->event.mouseButton.button == sfMouseLeft) {
+            if (defender->state == 3) {
+                game->ff = (game->ff == 1 && defender->playing == 1) ? 2 : 1;
+                game->p_but[i].rect.left = (game->p_but[i].rect.left == 126) ? 252 : 126;
+                sfSprite_setTextureRect(game->p_but[i].sprite, game->p_but[i].rect);
+            }
+            defender->state = 0;
+        }
+    }
+}

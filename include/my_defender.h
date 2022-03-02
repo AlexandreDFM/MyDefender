@@ -116,9 +116,12 @@ typedef struct game {
     int wave_ind;
     int score;
     int health;
+    int ff;
     sfTexture **t_array;
     sfSprite *hud;
     sfSprite *map;
+    sfSprite *up_gui;
+    bouton_t p_but[2];
     sfImage *map_c;
     sfFont *font;
     sfText *sc;
@@ -132,6 +135,8 @@ typedef struct game {
 
 typedef struct defender {
     enum scene_t scene;
+    int playing;
+    int state;
     int valid[4];
     go_t intro;
     go_t title;
@@ -161,7 +166,6 @@ char *get_lines(char const *filepath);
 void display_go(sfRenderWindow *w, go_t go);
 char *my_strcpy(char *dest, char const *src);
 char **my_strtwa(char const *str, char *limit);
-void game(sfRenderWindow *win, game_t *game_s);
 void *my_memset(void *dest, int value, int length);
 void check_pos(game_t *game, sfRenderWindow *window);
 void display_menu(sfRenderWindow *window, menu_t menu);
@@ -176,4 +180,6 @@ intro_t create_intro(char *tpath, sfVector2f pos, sfIntRect rect);
 title_t create_title(char *tpath, sfVector2f pos, sfIntRect rect);
 bouton_t create_bouton(char *tpath, sfVector2f pos, sfIntRect rect);
 cursor_t create_cursor(char *tpath, sfVector2f pos, sfIntRect rect);
+void ig_but(game_t *game, defender_t *defender, sfRenderWindow *win);
+void game(sfRenderWindow *win, game_t *game_s, defender_t *defender);
 go_t create_go(char *tpath, sfVector2f pos, sfIntRect hitbox, sfVector2f size);

@@ -25,6 +25,8 @@ defender_t init(void)
     (sfVector2f) {0, 0}, (sfIntRect) {0, 0, 64, 64});
     defender.clockintro = sfClock_create();
     defender.scene = GAME;
+    defender.playing = 0;
+    defender.state = 0;
     return defender;
 }
 
@@ -40,10 +42,27 @@ game_t init_textures(void)
     game.t_array = t_array;
     game.hud = sfSprite_create();
     game.map = sfSprite_create();
+    game.up_gui = sfSprite_create();
+    for (int i = 0; i < 2; i++) {
+        game.p_but[i].sprite = sfSprite_create();
+        game.p_but[i].rect = (sfIntRect) {i * 126 * 3, 0, 126, 127};
+        game.p_but[i].resize = (sfVector2f) { 0.5, 0.5};
+        game.p_but[i].pos = (sfVector2f) {1540 + 90 * i, 945};
+        game.p_but[i].clicked = 0;
+        sfSprite_setTexture(game.p_but[i].sprite,t_array[6], sfTrue);
+        sfSprite_setTextureRect(game.p_but[i].sprite, game.p_but[i].rect);
+        sfSprite_setScale(game.p_but[i].sprite, game.p_but[i].resize);
+        sfSprite_setPosition(game.p_but[i].sprite, game.p_but[i].pos);
+        sfSprite_setOrigin(game.p_but[i].sprite, (sfVector2f) {126 / 2, 127 / 2});
+    }
     sfSprite_setTexture(game.hud, t_array[0], sfTrue);
     sfSprite_setTexture(game.map, t_array[1], sfTrue);
+    sfSprite_setTexture(game.up_gui, t_array[5], sfTrue);
     sfSprite_setPosition(game.map, (sfVector2f) {237, 0});
+    sfSprite_setPosition(game.up_gui, (sfVector2f) {242, 900});
     sfSprite_setScale(game.map, (sfVector2f) {1.259, 1.242857142857143});
+    sfSprite_setScale(game.hud, (sfVector2f) {0.7017543859649123, 0.7012987012987013});
+    sfSprite_setScale(game.up_gui, (sfVector2f) {0.7017543859649123, 0.7012987012987013});
     game.map_c = sfImage_createFromFile("maps/map_test.png");
     game.pixels = malloc(sizeof(sfUint8 *));
     game.pixels = sfImage_getPixelsPtr(game.map_c);
@@ -61,6 +80,7 @@ game_t init_textures(void)
     game.frame = (sfFloatRect) {237, 0, 1359, 970};
     game.wave_nb = 1;
     game.wave_ind = 0;
+    game.ff = 1;
     game.waves = init_waves();
     game.b_colors = "RBGYW";
     fill_waves(&game);
@@ -71,11 +91,12 @@ game_t init_textures(void)
     game.h = sfText_create();
     game.sc = sfText_create();
     game.wav = sfText_create();
+    sfText_setFillColor(game.h, sfRed);
     sfText_setFont(game.h, game.font);
     sfText_setFont(game.sc, game.font);
     sfText_setFont(game.wav, game.font);
-    sfText_setPosition(game.sc, (sfVector2f) {1570, 33});
-    sfText_setPosition(game.h, (sfVector2f) {1570, 88});
+    sfText_setPosition(game.sc, (sfVector2f) {1570, 38});
+    sfText_setPosition(game.h, (sfVector2f) {1570, 93});
     sfText_setCharacterSize(game.sc, 48);
     sfText_setCharacterSize(game.h, 48);
     return game;

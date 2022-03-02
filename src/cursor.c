@@ -24,9 +24,8 @@ cursor_t create_cursor(char *tpath, sfVector2f pos, sfIntRect rect)
 
 void display_cursor(sfRenderWindow *window, cursor_t cursor)
 {
-    float posx = sfMouse_getPositionRenderWindow(window).x;
-    float posy = sfMouse_getPositionRenderWindow(window).y;
-    sfVector2f coord = {posx, posy};
+    cursor.pos.x = (float) sfMouse_getPositionRenderWindow(window).x;
+    cursor.pos.y = (float) sfMouse_getPositionRenderWindow(window).y;
     sfVector2f origin = {12, 12};
     if (sfMouse_isButtonPressed(sfMouseLeft))
         cursor.rect = (sfIntRect) {0, 64, 64, 64};
@@ -35,6 +34,6 @@ void display_cursor(sfRenderWindow *window, cursor_t cursor)
     sfSprite_setTexture(cursor.sprite, cursor.texture, sfTrue);
     sfSprite_setOrigin(cursor.sprite, origin);
     sfSprite_setTextureRect(cursor.sprite, cursor.rect);
-    sfSprite_setPosition(cursor.sprite, coord);
+    sfSprite_setPosition(cursor.sprite, cursor.pos);
     sfRenderWindow_drawSprite(window, cursor.sprite, NULL);
 }
