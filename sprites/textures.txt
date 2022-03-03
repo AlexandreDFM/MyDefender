@@ -3,3 +3,5 @@ sprites/map1.png
 sprites/bloons.png
 sprites/singes.png
 maps/map_test.png
+sprites/upgrade_gui.png
+sprites/game_button.png

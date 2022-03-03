@@ -19,6 +19,10 @@ void close_window(sfRenderWindow *window, defender_t *defender)
 void check_events(sfRenderWindow *window, defender_t *defender)
 {
     close_window(window, defender);
+    if (defender->state == 1 && defender->event.type == sfEvtKeyReleased &&
+    defender->event.key.code == sfMouseLeft) {
+        defender->state = 0;
+    }
 }
 
 void boucle(sfRenderWindow *window, defender_t *defender, game_t *game_s)
@@ -31,7 +35,10 @@ void boucle(sfRenderWindow *window, defender_t *defender, game_t *game_s)
             menu(window, defender);
         }
         if (defender->scene == GAME) {
-            game(window, game_s);
+            game(window, game_s, defender);
+        }
+        if (defender->scene == PAUSE) {
+            pause_f(window, defender, game_s);
         }
         display_cursor(window, defender->cursor);
         if (defender->scene == INTRO) {

@@ -30,6 +30,8 @@ SRC    = main.c								\
 		src/utils/my_strdup.c				\
 		src/utils/my_strcpy.c				\
 		src/utils/my_strtwa.c				\
+		src/utils/my_itoa.c					\
+		src/pause.c							\
 
 OBJ    = $(SRC:.c=.o)
 
@@ -42,7 +44,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@make -C ./lib/my
-	@$(CC) $(SRC) -o $(NAME) $(LIBFLAG)
+	@$(CC) $(SRC) -o $(NAME) $(LIBFLAG) -lm
 
 clean:
 	@$(RM) $(OBJ)
