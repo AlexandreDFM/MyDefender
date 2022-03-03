@@ -56,10 +56,9 @@ void ig_but(game_t *game, defender_t *defender, sfRenderWindow *win)
         sfFloatRect rect = sfSprite_getGlobalBounds(game->p_but[i].sprite);
         if (sfFloatRect_contains(&rect, pos.x, pos.y)) {
             game->p_but[i].clicked = 1;
-        } else game->p_but[i].clicked = 0;
-        if (game->p_but[i].clicked == 1) {
             sfSprite_setScale(game->p_but[i].sprite, (sfVector2f) {0.6, 0.6});
         } else {
+            game->p_but[i].clicked = 0;
             sfSprite_setScale(game->p_but[i].sprite, (sfVector2f) {0.5, 0.5});
         }
         if (game->p_but[i].clicked == 1 &&
