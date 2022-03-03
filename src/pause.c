@@ -24,7 +24,11 @@ void p_draw(sfRenderWindow *win, defender_t *defender, game_t *game)
 
 void check_but(sfRenderWindow *win, defender_t *defender, game_t *game, int i)
 {
-    
+    switch (i)
+    {
+    case 0:
+        break;
+    }
 }
 
 void pause_buttons(sfRenderWindow *win, defender_t *defender, game_t *game, int i)
