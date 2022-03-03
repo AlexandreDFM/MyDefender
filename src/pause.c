@@ -22,22 +22,26 @@ void p_draw(sfRenderWindow *win, defender_t *defender, game_t *game)
     sfRenderWindow_drawSprite(win, game->p_but[1].sprite, NULL);
 }
 
+void check_but(sfRenderWindow *win, defender_t *defender, game_t *game, int i)
+{
+    
+}
+
 void pause_buttons(sfRenderWindow *win, defender_t *defender, game_t *game, int i)
 {
     sfVector2i pos = sfMouse_getPositionRenderWindow(win);
     defender->cursor.pos.x = pos.x;
     defender->cursor.pos.y = pos.y;
-    if (i < 5) {
-        sfFloatRect rect =
-        sfSprite_getGlobalBounds(defender->p_menu.pause_b[i].sprite);
-        if (sfFloatRect_contains(&rect, pos.x, pos.y)) {
-            defender->p_menu.pause_b[i].clicked = 1;
-        } else defender->p_menu.pause_b[i].clicked = 0;
-        if (defender->p_menu.pause_b[i].clicked == 1) {
-            sfSprite_setScale(defender->p_menu.pause_b[i].sprite, (sfVector2f) {1.1, 1.1});
-        } else {
-            sfSprite_setScale(defender->p_menu.pause_b[i].sprite, (sfVector2f) {1, 1});
-        }
+    sfFloatRect rect =
+    sfSprite_getGlobalBounds(defender->p_menu.pause_b[i].sprite);
+    if (sfFloatRect_contains(&rect, pos.x, pos.y)) {
+        defender->p_menu.pause_b[i].clicked = 1;
+        sfSprite_setScale(defender->p_menu.pause_b[i].sprite,
+        (sfVector2f) {1.1, 1.1});
+    } else {
+        defender->p_menu.pause_b[i].clicked = 0;
+        sfSprite_setScale(defender->p_menu.pause_b[i].sprite,
+        (sfVector2f) {1, 1});
     }
 }
 
