@@ -27,6 +27,7 @@ void check_but(sfRenderWindow *win, defender_t *defender, game_t *game, int i)
     switch (i)
     {
     case 0:
+        defender->scene = GAME;
         break;
     }
 }
@@ -42,6 +43,9 @@ void pause_buttons(sfRenderWindow *win, defender_t *defender, game_t *game, int 
         defender->p_menu.pause_b[i].clicked = 1;
         sfSprite_setScale(defender->p_menu.pause_b[i].sprite,
         (sfVector2f) {1.1, 1.1});
+        if (sfMouse_isButtonPressed(sfMouseLeft)) {
+            check_but(win, defender, game, i);
+        }
     } else {
         defender->p_menu.pause_b[i].clicked = 0;
         sfSprite_setScale(defender->p_menu.pause_b[i].sprite,
