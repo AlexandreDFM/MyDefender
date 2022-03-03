@@ -155,6 +155,7 @@ typedef struct defender {
 }defender_t;
 
 void load_window();
+
 defender_t init(void);
 char *my_itoa(int num);
 char **init_waves(void);
