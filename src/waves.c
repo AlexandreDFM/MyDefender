@@ -33,8 +33,6 @@ void fill_waves(game_t *game)
 
 char **init_waves(void)
 {
-    int i = 1, wave = 0, j = 0;
-    int count = 1;
     char **tmp = my_strtwa(get_lines("maps/wave"), "|\n");
     return tmp;
 }

@@ -64,7 +64,7 @@ void ig_but(game_t *game, defender_t *defender, sfRenderWindow *win)
         }
         if (game->p_but[i].clicked == 1 &&
         sfMouse_isButtonPressed(sfMouseLeft) &&
-        defender->playing == 0) {
+        defender->playing == 0 && i == 0) {
             if (defender->state == 4) fill_waves(game);
             defender->state = 1;
             defender->playing = 1;
@@ -72,8 +72,12 @@ void ig_but(game_t *game, defender_t *defender, sfRenderWindow *win)
             sfSprite_setTextureRect(game->p_but[i].sprite, game->p_but[i].rect);
         }
         if (game->p_but[i].clicked == 1 && sfMouse_isButtonPressed(sfMouseLeft)
-        && defender->playing == 1 && defender->state == 0) {
+        && defender->playing == 1 && defender->state == 0 && i == 0) {
             defender->state = 3;
+        }
+        if (game->p_but[i].clicked == 1 && sfMouse_isButtonPressed(sfMouseLeft)
+        && defender->state == 0 && i == 1) {
+            defender->scene = PAUSE;
         }
         if (defender->state != 0 && defender->event.type ==
         sfEvtMouseButtonReleased && defender->event.mouseButton.button == sfMouseLeft) {

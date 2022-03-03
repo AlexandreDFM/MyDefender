@@ -7,6 +7,52 @@
 
 #include "my_defender.h"
 
+sfVector2f set_pos(int i, int offset)
+{
+    switch (i)
+    {
+    case 0: case 1: case 2: case 3: case 4:
+        return (sfVector2f) {518 + offset * i, 384};
+    case 5: case 6: case 7:
+        return (sfVector2f) {618 + offset * (i - 4.5), 534};
+    }
+    return (sfVector2f) {0, 0};
+}
+
+defender_t init3(defender_t defender)
+{
+    int indx = 0, indy = 127;
+    int offset = 200;
+    sfTexture *texture = sfTexture_createFromFile("sprites/game_button.png", NULL);
+    for (int i = 0; i < 8; i++) {
+        defender.p_menu.pause_b[i].texture = texture;
+        defender.p_menu.pause_b[i].sprite = sfSprite_create();
+        sfSprite_setTexture(defender.p_menu.pause_b[i].sprite, texture, sfTrue);
+        sfSprite_setOrigin(defender.p_menu.pause_b[i].sprite, (sfVector2f) {63, 63.5});
+        defender.p_menu.pause_b[i].pos = set_pos(i, offset);
+        if (i < 4)
+            defender.p_menu.pause_b[i].rect = (sfIntRect) {0 + 126 * i, 127, 126, 127};
+        else {
+            defender.p_menu.pause_b[i].rect = (sfIntRect) {0 + indx, 127 + indy, 126, 127};
+            indx += 252;
+        }
+        if (i == 5) indx = 0, indy += 127;
+        sfSprite_setPosition(defender.p_menu.pause_b[i].sprite, defender.p_menu.pause_b[i].pos);
+        sfSprite_setTextureRect(defender.p_menu.pause_b[i].sprite, defender.p_menu.pause_b[i].rect);
+    }
+    return defender;
+}
+
+defender_t init2(defender_t defender)
+{
+    defender.p_menu.fade = sfRectangleShape_create();
+    sfRectangleShape_setSize(defender.p_menu.fade, (sfVector2f) {1442, 1080});
+    sfRectangleShape_setPosition(defender.p_menu.fade, (sfVector2f) {237, 0});
+    defender.p_menu.color = sfColor_fromRGBA(0, 0, 0, 128);
+    sfRectangleShape_setFillColor(defender.p_menu.fade, defender.p_menu.color);
+    return init3(defender);
+}
+
 defender_t init(void)
 {
     defender_t defender;
@@ -27,7 +73,7 @@ defender_t init(void)
     defender.scene = GAME;
     defender.playing = 0;
     defender.state = 0;
-    return defender;
+    return init2(defender);
 }
 
 game_t init_textures(void)
@@ -70,7 +116,7 @@ game_t init_textures(void)
     game.head = game.bloon;
     sfVector3f colors[5] = {{0, 51, 255}, {0, 255, 72},
     {197, 0, 0}, {158, 0, 197}, {255, 106, 0}};
-    sfVector2f dirs[5] = {{0,1}, {-1, 0}, {1, 0}, {0, -1}, {}};
+    sfVector2f dirs[5] = {{0,1}, {-1, 0}, {1, 0}, {0, -1}, {0, 0}};
     game.colors = malloc(sizeof(sfVector3f) * 6);
     game.dirs = malloc(sizeof(sfVector2f) * 6);
     for (int i = 0; i < 5; i++) {

@@ -133,6 +133,12 @@ typedef struct game {
     sfFloatRect frame;
 }game_t;
 
+typedef struct pause_t {
+    sfColor color;
+    sfRectangleShape *fade;
+    bouton_t pause_b[8];
+}pause_t;
+
 typedef struct defender {
     enum scene_t scene;
     int playing;
@@ -143,6 +149,7 @@ typedef struct defender {
     go_t menu;
     cursor_t cursor;
     bouton_t bouton[4];
+    pause_t p_menu;
     sfEvent event;
     sfClock *clockintro;
 }defender_t;
@@ -182,4 +189,5 @@ bouton_t create_bouton(char *tpath, sfVector2f pos, sfIntRect rect);
 cursor_t create_cursor(char *tpath, sfVector2f pos, sfIntRect rect);
 void ig_but(game_t *game, defender_t *defender, sfRenderWindow *win);
 void game(sfRenderWindow *win, game_t *game_s, defender_t *defender);
+void pause_f(sfRenderWindow *window, defender_t *defender, game_t *game);
 go_t create_go(char *tpath, sfVector2f pos, sfIntRect hitbox, sfVector2f size);
