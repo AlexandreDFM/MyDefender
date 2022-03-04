@@ -131,6 +131,7 @@ typedef struct game {
     sfVector3f *colors;
     sfVector2f *dirs;
     sfFloatRect frame;
+    sfClock *c;
 }game_t;
 
 typedef struct pause_t {
@@ -143,6 +144,7 @@ typedef struct defender {
     enum scene_t scene;
     int playing;
     int state;
+    int aplay;
     int valid[4];
     go_t intro;
     go_t title;
