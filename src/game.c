@@ -43,9 +43,15 @@ void game(sfRenderWindow *win, game_t *game_s, defender_t *defender)
     sfRenderWindow_drawSprite(win, game_s->up_gui, NULL);
     sfRenderWindow_drawSprite(win, game_s->p_but[0].sprite, NULL);
     sfRenderWindow_drawSprite(win, game_s->p_but[1].sprite, NULL);
+    display_tower_hitbox(win, game_s, defender);
     draw_score(game_s, win);
     game_s->bloon = game_s->head;
     if (game_s->bloon == NULL || game_s->bloon->next == NULL) {
         next_wave(game_s, win, defender);
     }
+    while (game_s->monkey != NULL) {
+        sfRenderWindow_drawSprite(win, game_s->monkey->sprite, NULL);
+        game_s->monkey = game_s->monkey->next;
+    }
+    game_s->monkey = game_s->monkey_head;
 }

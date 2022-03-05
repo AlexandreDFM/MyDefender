@@ -145,5 +145,11 @@ game_t init_textures(void)
     sfText_setPosition(game.h, (sfVector2f) {1570, 93});
     sfText_setCharacterSize(game.sc, 48);
     sfText_setCharacterSize(game.h, 48);
+    game.monkey = NULL;
+    game.monkey_head = NULL;
+    game.t_monkey = sfTexture_createFromFile("./sprites/all_monkey.png", NULL);
+    fill_tower_box(&game);
+    fill_debug_t_box(&game);
+    fill_rect_monkeys(&game);
     return game;
 }

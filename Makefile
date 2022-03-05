@@ -23,6 +23,7 @@ SRC    = main.c								\
 		src/init.c							\
 		src/intro.c							\
 		src/load_bloons.c					\
+		src/monkey.c						\
 		src/waves.c							\
 		src/bloons_color.c					\
 		src/utils/my_atoi.c					\
