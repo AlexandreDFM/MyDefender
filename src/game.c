@@ -17,7 +17,6 @@ void draw_score(game_t *game, sfRenderWindow *win)
 
 void next_wave(game_t *game, sfRenderWindow *win, defender_t *defender)
 {
-    // game->ff = 1;
     game->bloon->pos.y = -50;
     if (defender->aplay == 1) {
         fill_waves(game);

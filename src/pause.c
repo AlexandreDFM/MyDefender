@@ -22,6 +22,16 @@ void p_draw(sfRenderWindow *win, defender_t *defender, game_t *game)
     sfRenderWindow_drawSprite(win, game->p_but[1].sprite, NULL);
 }
 
+void reset(sfRenderWindow *win, defender_t *defender, game_t *game)
+{
+    while (game->bloon != NULL) {
+        my_printf("NTM\n");
+        delete_bloon(game);
+        // sfSprite_setPosition(game->bloon, (sfVector2f) {0, 1600});
+        // game->bloon = game->bloon->next;
+    }
+}
+
 void check_but(sfRenderWindow *win, defender_t *defender, game_t *game, int i)
 {
     switch (i) {
@@ -30,6 +40,7 @@ void check_but(sfRenderWindow *win, defender_t *defender, game_t *game, int i)
     case 1:
         break;
     case 2:
+        // reset(win, defender, game);
         defender->scene = MENU;
     case 3:
         break;
