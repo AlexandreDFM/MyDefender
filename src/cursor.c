@@ -12,7 +12,7 @@ cursor_t create_cursor(char *tpath, sfVector2f pos, sfIntRect rect)
     cursor_t cursor;
     cursor.sprite = sfSprite_create();
     cursor.texture = sfTexture_createFromFile(tpath, NULL);
-    cursor.s_monkey = NO_MONKEY;
+    cursor.t_to = NO_MONKEY;
     cursor.monkey = c_monkey(pos, (sfIntRect) {0, 0, 111, 114}, (sfVector2f) {0.75, 0.75}, DART_MONKEY);
     cursor.monkey_c = c_monkey_c(pos, 100, (sfVector2f) {0.75, 0.75}, sfRed);
     cursor.pos = pos;
@@ -33,14 +33,17 @@ void display_cursor(sfRenderWindow *window, game_t *game, defender_t *defender, 
     cursor.monkey.pos.y = cursor.pos.y;
     cursor.monkey_c.pos.x = cursor.pos.x;
     cursor.monkey_c.pos.y = cursor.pos.y;
-    if (cursor.s_monkey != NO_MONKEY) {
-        if (check_m_pos(game, defender)) {
-            cursor.monkey_c.color = (sfColor) {0, 255, 0, 120};
+    if (cursor.t_to > NO_MONKEY) {
+        char **stats = my_strtwa(game->tower_stats[tower(cursor.t_to) == 0 ? 1 : tower(cursor.t_to) * 9 + 1], "|");
+        cursor.monkey_c.radius = my_atoi(stats[5]);
+        if (check_t_pl(game, defender)) {
+            cursor.monkey_c.color = (sfColor) {0, 0, 0, 120};
         } else {
             cursor.monkey_c.color = (sfColor) {255, 0, 0, 120};
         }
         display_monkey_hb(window, cursor.monkey_c);
         display_monkey(window, cursor.monkey);
+        free(stats);
     }
     sfVector2f origin = {12, 12};
     if (sfMouse_isButtonPressed(sfMouseLeft))

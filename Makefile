@@ -33,6 +33,9 @@ SRC    = main.c								\
 		src/utils/my_strtwa.c				\
 		src/utils/my_itoa.c					\
 		src/pause.c							\
+		src/tower_nodes.c					\
+		src/tower_hitbox.c					\
+		src/check_towers_placement.c		\
 
 OBJ    = $(SRC:.c=.o)
 

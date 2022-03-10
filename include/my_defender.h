@@ -13,7 +13,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <time.h>
 #include <string.h>
 #include <SFML/System.h>
 #include <SFML/Window.h>
@@ -22,6 +21,11 @@
 #include "colors.h"
 
 #pragma once
+
+enum boolean_t {
+    FALSE = 0,
+    TRUE = 1,
+};
 
 enum scene_t {
     INTRO,
@@ -37,6 +41,7 @@ enum scene_t {
 };
 
 enum c_monkey_t {
+    MONKEY_SELECT = -1,
     NO_MONKEY = 0,
     DART_MONKEY = 1,
     TACK_SHOOTER = 2,
@@ -64,7 +69,7 @@ typedef struct game_object {
     sfVector2f resize;
 }go_t;
 
-typedef struct hitbox {
+typedef struct r_hitbox {
     sfRectangleShape *shape;
     sfColor color;
     sfVector2f pos;
@@ -112,12 +117,19 @@ typedef struct bouton {
 }bouton_t;
 
 typedef struct monkey {
-    int type;
+    enum c_monkey_t type;
+    enum boolean_t clicked;
     int damage;
     int lvl1;
     int lvl2;
-    sfSprite *sprite;
     sfTexture *texture;
+    sfSprite *sprite;
+    go_t avatar;
+    go_t upgrade1;
+    go_t upgrade2;
+    sfText *sell;
+    r_hb_t hitbox_sell;
+    sfText *priority;
     sfVector2f pos;
     sfIntRect hitbox;
     sfVector2f resize;
@@ -138,7 +150,7 @@ typedef struct bloons {
 }bloons_t;
 
 typedef struct cursor {
-    enum c_monkey_t s_monkey;
+    enum c_monkey_t t_to;
     monkey_t monkey;
     c_hb_t monkey_c;
     sfSprite *sprite;
@@ -153,6 +165,7 @@ typedef struct game {
     bloons_t *bloon;
     monkey_t *monkey_head;
     monkey_t *monkey;
+    char **tower_stats;
     char **waves;
     char *b_colors;
     int wave_nb;
@@ -177,7 +190,7 @@ typedef struct game {
     sfTexture *t_monkey;
     sfFloatRect **tower_box;
     r_hb_t tower_hitbox[14];
-    sfIntRect *rect_monkeys;
+    sfIntRect *r_to;
 }game_t;
 
 typedef struct pause_t {
@@ -208,17 +221,22 @@ char **init_waves(void);
 char *my_strdup(char *src);
 game_t init_textures(void);
 int my_atoi(char const *str);
+void fill_hudtowers(game_t *g);
 void fill_waves(game_t *game);
 void fill_bloons(game_t *game);
 void fill_tower_box(game_t *game);
 void fill_debug_t_box(game_t *game);
+void check_thud_hb(sfRenderWindow *w, game_t *g, defender_t *d);
+void tower_node(sfRenderWindow *w, game_t *game, defender_t *defender);
 void display_tower_hitbox(sfRenderWindow *w, game_t *game, defender_t *defender);
 c_hb_t c_monkey_c(sfVector2f pos, float radius, sfVector2f size, sfColor color);
+monkey_t *first_monkey(game_t *game, defender_t *defender, sfVector2f pos);
+void add_monkey(game_t *game, defender_t *defender, sfVector2f pos);
 void display_monkey_hb(sfRenderWindow *w, c_hb_t hb_monkey);
-int check_m_pos(game_t *game, defender_t *defender);
+int check_t_pl(game_t *game, defender_t *defender);
 void draw_score(game_t *game, sfRenderWindow *win);
-void fill_rect_monkeys(game_t *game);
-int modeValid(int mode);
+void fill_r_to(game_t *game);
+int tower(int mode);
 void red_bloons(bloons_t *obj);
 void delete_bloon(game_t *game);
 void blue_bloons(bloons_t *obj);

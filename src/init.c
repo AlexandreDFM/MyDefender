@@ -86,6 +86,7 @@ game_t init_textures(void)
     for (int j = 0; j < i - 1; j++)
         t_array[j] = sfTexture_createFromFile(array[j], NULL);
     game.t_array = t_array;
+    game.tower_stats = my_strtwa(get_lines("./parsing/tower_stats.txt"), "\n");
     game.hud = sfSprite_create();
     game.map = sfSprite_create();
     game.up_gui = sfSprite_create();
@@ -148,8 +149,7 @@ game_t init_textures(void)
     game.monkey = NULL;
     game.monkey_head = NULL;
     game.t_monkey = sfTexture_createFromFile("./sprites/all_monkey.png", NULL);
-    fill_tower_box(&game);
-    fill_debug_t_box(&game);
-    fill_rect_monkeys(&game);
+    fill_hudtowers(&game);
+    fill_r_to(&game);
     return game;
 }
