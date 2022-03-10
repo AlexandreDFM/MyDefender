@@ -85,14 +85,6 @@ typedef struct bouton {
     sfVector2f resize;
 }bouton_t;
 
-typedef struct cursor {
-    sfSprite *sprite;
-    sfTexture *texture;
-    sfVector2f pos;
-    sfIntRect rect;
-    sfVector2f resize;
-}cursor_t;
-
 typedef struct bloons
 {
     int type;
