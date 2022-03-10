@@ -23,6 +23,7 @@ SRC    = main.c								\
 		src/init.c							\
 		src/intro.c							\
 		src/load_bloons.c					\
+		src/monkey.c						\
 		src/waves.c							\
 		src/bloons_color.c					\
 		src/utils/my_atoi.c					\
@@ -32,6 +33,9 @@ SRC    = main.c								\
 		src/utils/my_strtwa.c				\
 		src/utils/my_itoa.c					\
 		src/pause.c							\
+		src/tower_nodes.c					\
+		src/tower_hitbox.c					\
+		src/check_towers_placement.c		\
 
 OBJ    = $(SRC:.c=.o)
 

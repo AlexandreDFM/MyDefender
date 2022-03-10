@@ -22,6 +22,11 @@
 
 #pragma once
 
+enum boolean_t {
+    FALSE = 0,
+    TRUE = 1,
+};
+
 enum scene_t {
     INTRO,
     MENU,
@@ -33,6 +38,18 @@ enum scene_t {
     TRANSITIONGO,
     TRANSITIONWIN,
     TRANSITIONMENU,
+};
+
+enum c_monkey_t {
+    MONKEY_SELECT = -1,
+    NO_MONKEY = 0,
+    DART_MONKEY = 1,
+    TACK_SHOOTER = 2,
+    NINJA_MONKEY = 5,
+    BOMB_SHOOTER = 6,
+    ICE_MONKEY = 7,
+    GLUE_GUNNER = 8,
+    SUPER_MONKEY = 11,
 };
 
 enum c_bloons_t {
@@ -51,6 +68,20 @@ typedef struct game_object {
     sfIntRect rect;
     sfVector2f resize;
 }go_t;
+
+typedef struct r_hitbox {
+    sfRectangleShape *shape;
+    sfColor color;
+    sfVector2f pos;
+    sfIntRect rect;
+}r_hb_t;
+
+typedef struct c_hitbox {
+    sfCircleShape *shape;
+    sfColor color;
+    sfVector2f pos;
+    float radius;
+}c_hb_t;
 
 typedef struct intro {
     sfSprite *sprite;
@@ -85,16 +116,28 @@ typedef struct bouton {
     sfVector2f resize;
 }bouton_t;
 
-typedef struct cursor {
-    sfSprite *sprite;
+typedef struct monkey {
+    enum c_monkey_t type;
+    enum boolean_t clicked;
+    int damage;
+    int lvl1;
+    int lvl2;
     sfTexture *texture;
+    sfSprite *sprite;
+    go_t avatar;
+    go_t upgrade1;
+    go_t upgrade2;
+    sfText *sell;
+    r_hb_t hitbox_sell;
+    sfText *priority;
     sfVector2f pos;
-    sfIntRect rect;
+    sfIntRect hitbox;
     sfVector2f resize;
-}cursor_t;
+    struct monkey *prev;
+    struct monkey *next;
+}monkey_t;
 
-typedef struct bloons
-{
+typedef struct bloons {
     int type;
     float speed;
     int health;
@@ -106,9 +149,23 @@ typedef struct bloons
     struct bloons *next;
 }bloons_t;
 
+typedef struct cursor {
+    enum c_monkey_t t_to;
+    monkey_t monkey;
+    c_hb_t monkey_c;
+    sfSprite *sprite;
+    sfTexture *texture;
+    sfVector2f pos;
+    sfIntRect rect;
+    sfVector2f resize;
+}cursor_t;
+
 typedef struct game {
     bloons_t *head;
     bloons_t *bloon;
+    monkey_t *monkey_head;
+    monkey_t *monkey;
+    char **tower_stats;
     char **waves;
     char *b_colors;
     int wave_nb;
@@ -130,6 +187,10 @@ typedef struct game {
     sfVector3f *colors;
     sfVector2f *dirs;
     sfFloatRect frame;
+    sfTexture *t_monkey;
+    sfFloatRect **tower_box;
+    r_hb_t tower_hitbox[14];
+    sfIntRect *r_to;
     sfClock *c;
 }game_t;
 
@@ -162,8 +223,22 @@ char **init_waves(void);
 char *my_strdup(char *src);
 game_t init_textures(void);
 int my_atoi(char const *str);
+void fill_hudtowers(game_t *g);
 void fill_waves(game_t *game);
 void fill_bloons(game_t *game);
+void fill_tower_box(game_t *game);
+void fill_debug_t_box(game_t *game);
+void check_thud_hb(sfRenderWindow *w, game_t *g, defender_t *d);
+void tower_node(sfRenderWindow *w, game_t *game, defender_t *defender);
+void display_tower_hitbox(sfRenderWindow *w, game_t *game, defender_t *defender);
+c_hb_t c_monkey_c(sfVector2f pos, float radius, sfVector2f size, sfColor color);
+monkey_t *first_monkey(game_t *game, defender_t *defender, sfVector2f pos);
+void add_monkey(game_t *game, defender_t *defender, sfVector2f pos);
+void display_monkey_hb(sfRenderWindow *w, c_hb_t hb_monkey);
+int check_t_pl(game_t *game, defender_t *defender);
+void draw_score(game_t *game, sfRenderWindow *win);
+void fill_r_to(game_t *game);
+int tower(int mode);
 void red_bloons(bloons_t *obj);
 void delete_bloon(game_t *game);
 void blue_bloons(bloons_t *obj);
@@ -182,12 +257,14 @@ void intro(sfRenderWindow *window, defender_t *defender);
 void display_intro(sfRenderWindow *window, intro_t intro);
 void display_title(sfRenderWindow *window, title_t title);
 void display_bouton(sfRenderWindow *window, bouton_t bouton);
-void display_cursor(sfRenderWindow *window, cursor_t cursor);
+void display_cursor(sfRenderWindow *window, game_t *game, defender_t *defender, cursor_t cursor);
+void display_monkey(sfRenderWindow *w, monkey_t monkey);
 menu_t create_menu(char *tpath, sfVector2f pos, sfIntRect rect);
 intro_t create_intro(char *tpath, sfVector2f pos, sfIntRect rect);
 title_t create_title(char *tpath, sfVector2f pos, sfIntRect rect);
 bouton_t create_bouton(char *tpath, sfVector2f pos, sfIntRect rect);
 cursor_t create_cursor(char *tpath, sfVector2f pos, sfIntRect rect);
+monkey_t c_monkey(sfVector2f pos, sfIntRect hitbox, sfVector2f size, int type);
 void ig_but(game_t *game, defender_t *defender, sfRenderWindow *win);
 void game(sfRenderWindow *win, game_t *game_s, defender_t *defender);
 void pause_f(sfRenderWindow *window, defender_t *defender, game_t *game);

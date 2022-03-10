@@ -40,7 +40,7 @@ void boucle(sfRenderWindow *window, defender_t *defender, game_t *game_s)
         if (defender->scene == PAUSE) {
             pause_f(window, defender, game_s);
         }
-        display_cursor(window, defender->cursor);
+        display_cursor(window, game_s, defender, defender->cursor);
         if (defender->scene == INTRO) {
             intro(window, defender);
         }sfRenderWindow_display(window);
