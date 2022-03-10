@@ -32,7 +32,10 @@ defender_t init3(defender_t defender)
         defender.p_menu.pause_b[i].pos = set_pos(i, offset);
         if (i < 4)
             defender.p_menu.pause_b[i].rect = (sfIntRect) {0 + 126 * i, 127, 126, 127};
-        else {
+        else if (i == 4) {
+            defender.p_menu.pause_b[i].rect = (sfIntRect) {126 + indx, 127 + indy, 126, 127};
+            indx += 252;
+        } else {
             defender.p_menu.pause_b[i].rect = (sfIntRect) {0 + indx, 127 + indy, 126, 127};
             indx += 252;
         }
@@ -73,6 +76,7 @@ defender_t init(void)
     defender.scene = GAME;
     defender.playing = 0;
     defender.state = 0;
+    defender.aplay = 0;
     return init2(defender);
 }
 
@@ -134,6 +138,7 @@ game_t init_textures(void)
     game.font = sfFont_createFromFile("sprites/font.ttf");
     game.score = 0;
     game.health = 100;
+    game.c = sfClock_create();
     game.h = sfText_create();
     game.sc = sfText_create();
     game.wav = sfText_create();
