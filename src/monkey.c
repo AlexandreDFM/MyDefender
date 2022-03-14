@@ -55,6 +55,7 @@ void check_thud_hb(sfRenderWindow *w, game_t *g, defender_t *d)
                 if (tower(monkey) != 84) {
                     d->cursor.t_to = monkey;
                     d->cursor.monkey.hitbox = g->r_to[tower(monkey)];
+                    sfSound_play(d->towertk);
                 }
             } else if (d->cursor.t_to > NO_MONKEY &&
             d->event.mouseButton.type == sfEvtMouseButtonPressed &&

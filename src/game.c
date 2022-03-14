@@ -9,7 +9,7 @@
 
 void draw_score(game_t *game, sfRenderWindow *win)
 {
-    sfText_setString(game->sc, my_itoa(game->score));
+    sfText_setString(game->sc, my_itoa(game->money));
     sfText_setString(game->h, my_itoa(game->health));
     sfRenderWindow_drawText(win, game->sc, NULL);
     sfRenderWindow_drawText(win, game->h, NULL);
@@ -27,6 +27,8 @@ void next_wave(game_t *game, sfRenderWindow *win, defender_t *defender)
 
 void monkey_up_display(sfRenderWindow *w, game_t *game, defender_t *defender)
 {
+    display_monkey_hb(w, game->monkey->range);
+    sfRenderWindow_drawSprite(w, game->monkey->sprite, NULL);
     display_go(w, game->monkey->avatar);
     display_go(w, game->monkey->upgrade1);
     display_go(w, game->monkey->upgrade2);
@@ -60,7 +62,12 @@ void monkey_management(sfRenderWindow *w, game_t *game, defender_t *defender)
     while (game->monkey != NULL) {
         sfRenderWindow_drawSprite(w, game->monkey->sprite, NULL);
         sfFloatRect rect = sfSprite_getGlobalBounds(game->monkey->sprite);
+        sfFloatRect s_rect = sfRectangleShape_getGlobalBounds(game->monkey->hitbox_sell.shape);
         if (sfMouse_isButtonPressed(sfMouseLeft) && defender->cursor.t_to == MONKEY_SELECT && game->monkey->clicked == TRUE) defender->cursor.t_to = NO_MONKEY;
+        if (defender->cursor.t_to == NO_MONKEY && sfFloatRect_contains(&s_rect, defender->cursor.pos.x, defender->cursor.pos.y) && sfMouse_isButtonPressed(sfMouseLeft)) {
+            delete_tower(game);
+            sfSound_play(defender->towerdl);
+        }
         if (defender->cursor.t_to == NO_MONKEY && sfFloatRect_contains(&rect, defender->cursor.pos.x, defender->cursor.pos.y) && sfMouse_isButtonPressed(sfMouseLeft)) {
             defender->cursor.t_to = MONKEY_SELECT;
             game->monkey->clicked = TRUE;
@@ -68,15 +75,19 @@ void monkey_management(sfRenderWindow *w, game_t *game, defender_t *defender)
         } else if (defender->cursor.t_to == MONKEY_SELECT && game->monkey->clicked == TRUE) {
             monkey_up_display(w, game, defender);
         } else {
-            game->monkey->clicked = FALSE;
+            if (game->monkey != NULL)
+                game->monkey->clicked = FALSE;
         }
-        game->monkey = game->monkey->next;
+        if (game->monkey != NULL)
+            game->monkey = game->monkey->next;
     }
     game->monkey = game->monkey_head;
 }
 
 void game(sfRenderWindow *win, game_t *game_s, defender_t *defender)
 {
+    if (sfMusic_getStatus(defender->game_music) == 0)
+        sfMusic_play(defender->game_music);
     sfRenderWindow_drawSprite(win, game_s->map, NULL);
     while (game_s->bloon != NULL && game_s->bloon->next != NULL && defender->playing == 1) {
         if (sfFloatRect_contains(&game_s->frame, game_s->bloon->pos.x, game_s->bloon->pos.y)){
@@ -100,4 +111,5 @@ void game(sfRenderWindow *win, game_t *game_s, defender_t *defender)
     }
     check_thud_hb(win, game_s, defender);
     monkey_management(win, game_s, defender);
+    tower_attack(game_s, defender);
 }

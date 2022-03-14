@@ -50,6 +50,42 @@ defender_t init2(defender_t defender)
     sfRectangleShape_setPosition(defender.p_menu.fade, (sfVector2f) {237, 0});
     defender.p_menu.color = sfColor_fromRGBA(0, 0, 0, 128);
     sfRectangleShape_setFillColor(defender.p_menu.fade, defender.p_menu.color);
+    defender.menu_music = sfMusic_createFromFile("./music/main_theme.ogg");
+    defender.game_music = sfMusic_createFromFile("./music/game_theme.ogg");
+    defender.slashbuffer = sfSoundBuffer_createFromFile("./sounds/schwing.ogg");
+    defender.slash = sfSound_create();
+    sfSound_setBuffer(defender.slash, defender.slashbuffer);
+    sfSound_setVolume(defender.slash, 50);
+    defender.popbuffer[0] = sfSoundBuffer_createFromFile("./sounds/pop1.ogg");
+    defender.pop[0] = sfSound_create();
+    defender.popbuffer[1] = sfSoundBuffer_createFromFile("./sounds/pop2.ogg");
+    defender.pop[1] = sfSound_create();
+    defender.popbuffer[2] = sfSoundBuffer_createFromFile("./sounds/pop3.ogg");
+    defender.pop[2] = sfSound_create();
+    defender.popbuffer[3] = sfSoundBuffer_createFromFile("./sounds/pop4.ogg");
+    defender.pop[3] = sfSound_create();
+    for (int i = 0 ; i < 4; i++) {
+        sfSound_setBuffer(defender.pop[i], defender.popbuffer[i]);
+        sfSound_setVolume(defender.pop[i], 15);
+    
+    }
+    defender.towertkbuffer = sfSoundBuffer_createFromFile("./sounds/tower_select.ogg");
+    defender.towertk = sfSound_create();
+    sfSound_setBuffer(defender.towertk, defender.towertkbuffer);
+    sfSound_setVolume(defender.towertk, 50);
+    defender.towerplbuffer = sfSoundBuffer_createFromFile("./sounds/tower_place.ogg");
+    defender.towerpl = sfSound_create();
+    sfSound_setBuffer(defender.towerpl, defender.towerplbuffer);
+    sfSound_setVolume(defender.towerpl, 50);
+    defender.towerdlbuffer = sfSoundBuffer_createFromFile("./sounds/sell_tower.ogg");
+    defender.towerdl = sfSound_create();
+    sfSound_setBuffer(defender.towerdl, defender.towerdlbuffer);
+    sfSound_setVolume(defender.towerdl, 50);
+    defender.font = sfFont_createFromFile("./sprites/font.ttf");
+    defender.help_txt = sfText_create();
+    sfText_setString(defender.help_txt, get_lines("./how_to_play/help.txt"));
+    sfText_setFont(defender.help_txt, defender.font);
+    sfText_setCharacterSize(defender.help_txt, 50);
     return init3(defender);
 }
 
@@ -70,7 +106,7 @@ defender_t init(void)
     defender.cursor = create_cursor("./sprites/cursor.png",
     (sfVector2f) {0, 0}, (sfIntRect) {0, 0, 64, 64});
     defender.clockintro = sfClock_create();
-    defender.scene = GAME;
+    defender.scene = INTRO;
     defender.playing = 0;
     defender.state = 0;
     return init2(defender);
@@ -133,7 +169,7 @@ game_t init_textures(void)
     fill_waves(&game);
     game.bloon = game.head;
     game.font = sfFont_createFromFile("sprites/font.ttf");
-    game.score = 0;
+    game.money = 650;
     game.health = 100;
     game.h = sfText_create();
     game.sc = sfText_create();

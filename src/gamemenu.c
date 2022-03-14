@@ -28,17 +28,27 @@ void is_bouton(sfRenderWindow *window, defender_t *defender)
 void switch_window(sfRenderWindow *window, defender_t *defender)
 {
     if (defender->event.mouseButton.type == sfEvtMouseButtonReleased
-    && defender->event.mouseButton.button == sfMouseLeft)
-    {
-        if (defender->valid[0])
+    && defender->event.mouseButton.button == sfMouseLeft) {
+        if (defender->valid[0]) {
+            sfMusic_stop(defender->menu_music);
             defender->scene = GAME;
-        if (defender->valid[3])
+        }
+        if (defender->valid[2]) {
+            defender->scene = SETTINGS;
+        }
+        if (defender->valid[2]) {
+            defender->scene = HOW_TO_PLAY;
+        }
+        if (defender->valid[3]) {
             sfRenderWindow_close(window);
+        }
     }
 }
 
 void menu(sfRenderWindow *window, defender_t *defender)
 {
+    if (sfMusic_getStatus(defender->menu_music) == 0)
+        sfMusic_play(defender->menu_music);
     display_go(window, defender->menu);
     display_go(window, defender->title);
     is_bouton(window, defender);

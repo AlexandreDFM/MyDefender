@@ -8,7 +8,7 @@
 #include "my.h"
 #include "printf.h"
 #include <SFML/Graphics.h>
-#include<fcntl.h>
+#include <fcntl.h>
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -19,6 +19,7 @@
 #include <SFML/Audio.h>
 #include <math.h>
 #include "colors.h"
+#define PI 3.141592654
 
 #pragma once
 
@@ -30,6 +31,8 @@ enum boolean_t {
 enum scene_t {
     INTRO,
     MENU,
+    SETTINGS,
+    HOW_TO_PLAY,
     GAME,
     PAUSE,
     GAMEOVER,
@@ -116,27 +119,6 @@ typedef struct bouton {
     sfVector2f resize;
 }bouton_t;
 
-typedef struct monkey {
-    enum c_monkey_t type;
-    enum boolean_t clicked;
-    int damage;
-    int lvl1;
-    int lvl2;
-    sfTexture *texture;
-    sfSprite *sprite;
-    go_t avatar;
-    go_t upgrade1;
-    go_t upgrade2;
-    sfText *sell;
-    r_hb_t hitbox_sell;
-    sfText *priority;
-    sfVector2f pos;
-    sfIntRect hitbox;
-    sfVector2f resize;
-    struct monkey *prev;
-    struct monkey *next;
-}monkey_t;
-
 typedef struct bloons {
     int type;
     float speed;
@@ -148,6 +130,43 @@ typedef struct bloons {
     struct bloons *prev;
     struct bloons *next;
 }bloons_t;
+
+typedef struct special_tower_1
+{
+    int damage;
+    int nb_mun;
+}s_t_1_t;
+
+typedef struct special_tower_2
+{
+    int damage;
+}s_t_2_t;
+
+typedef struct monkey {
+    enum c_monkey_t type;
+    enum boolean_t clicked;
+    int radius;
+    int damage;
+    int lvl1;
+    int lvl2;
+    int attackspeed;
+    sfTexture *texture;
+    sfSprite *sprite;
+    sfVector2f pos;
+    sfIntRect hitbox;
+    sfVector2f resize;
+    sfClock *clockattack;
+    c_hb_t range;
+    go_t avatar;
+    go_t upgrade1;
+    go_t upgrade2;
+    bloons_t *blooncibled;
+    sfText *sell;
+    r_hb_t hitbox_sell;
+    sfText *priority;
+    struct monkey *prev;
+    struct monkey *next;
+}monkey_t;
 
 typedef struct cursor {
     enum c_monkey_t t_to;
@@ -170,7 +189,7 @@ typedef struct game {
     char *b_colors;
     int wave_nb;
     int wave_ind;
-    int score;
+    int money;
     int health;
     int ff;
     sfTexture **t_array;
@@ -211,9 +230,25 @@ typedef struct defender {
     bouton_t bouton[4];
     pause_t p_menu;
     sfEvent event;
+    sfSoundBuffer *slashbuffer;
+    sfSoundBuffer *popbuffer[4];
+    sfSoundBuffer *towertkbuffer;
+    sfSoundBuffer *towerplbuffer;
+    sfSoundBuffer *towerdlbuffer;
+    sfSound *slash;
+    sfSound *pop[4];
+    sfSound *towertk;
+    sfSound *towerpl;
+    sfSound *towerdl;
+    sfMusic *menu_music;
+    sfMusic *game_music;
+    sfFont *font;
+    sfText *help_txt;
     sfClock *clockintro;
 }defender_t;
 
+char *get_lines(char const *filepath);
+void my_free_array(char **array);
 void load_window();
 defender_t init(void);
 char *my_itoa(int num);

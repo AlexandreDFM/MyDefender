@@ -36,6 +36,9 @@ SRC    = main.c								\
 		src/tower_nodes.c					\
 		src/tower_hitbox.c					\
 		src/check_towers_placement.c		\
+		src/tower_attack.c					\
+		src/how_to_play.c					\
+		src/settings.c						\
 
 OBJ    = $(SRC:.c=.o)
 

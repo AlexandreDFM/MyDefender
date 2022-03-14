@@ -58,7 +58,7 @@ c_hb_t c_monkey_c(sfVector2f pos, float radius, sfVector2f size, sfColor color)
     c_hb_t monkey_c;
     monkey_c.shape = sfCircleShape_create();
     monkey_c.radius = radius;
-    monkey_c.color = (sfColor) {255, 0, 0, 120};
+    monkey_c.color = color;
     monkey_c.pos = pos;
     sfCircleShape_setOutlineColor(monkey_c.shape, (sfColor) {0, 0, 0, 30});
     sfCircleShape_setOutlineThickness(monkey_c.shape, - (radius / 3));
