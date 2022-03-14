@@ -77,7 +77,7 @@ void ig_but(game_t *game, defender_t *defender, sfRenderWindow *win)
             if (defender->state == 4) fill_waves(game);
             defender->state = 1;
             defender->playing = 1;
-            game->p_but[i].rect.left = 126;
+            game->p_but[i].rect.left = (game->ff == 1) ? 126 : 252;
             sfSprite_setTextureRect(game->p_but[i].sprite, game->p_but[i].rect);
         }
         if (game->p_but[i].clicked == 1 && sfMouse_isButtonPressed(sfMouseLeft)

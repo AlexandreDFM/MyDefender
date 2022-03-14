@@ -210,6 +210,7 @@ typedef struct game {
     sfFloatRect **tower_box;
     r_hb_t tower_hitbox[14];
     sfIntRect *r_to;
+    sfClock *c;
 }game_t;
 
 typedef struct pause_t {
@@ -222,6 +223,7 @@ typedef struct defender {
     enum scene_t scene;
     int playing;
     int state;
+    int aplay;
     int valid[4];
     go_t intro;
     go_t title;
