@@ -117,6 +117,31 @@ typedef struct bouton {
     sfVector2f pos;
     sfIntRect rect;
     sfVector2f resize;
+}intro_t;
+
+typedef struct title {
+    sfSprite *sprite;
+    sfTexture *texture;
+    sfVector2f pos;
+    sfIntRect rect;
+    sfVector2f resize;
+}title_t;
+
+typedef struct menu {
+    sfSprite *sprite;
+    sfTexture *texture;
+    sfVector2f pos;
+    sfIntRect rect;
+    sfVector2f resize;
+}menu_t;
+
+typedef struct bouton {
+    int clicked;
+    sfSprite *sprite;
+    sfTexture *texture;
+    sfVector2f pos;
+    sfIntRect rect;
+    sfVector2f resize;
 }bouton_t;
 
 typedef struct bloons {
@@ -274,6 +299,14 @@ int check_t_pl(game_t *game, defender_t *defender);
 void draw_score(game_t *game, sfRenderWindow *win);
 void fill_r_to(game_t *game);
 int tower(int mode);
+void load_window();
+defender_t init(void);
+char **init_waves(void);
+game_t init_textures(void);
+char *my_strdup(char *src);
+int my_atoi(char const *str);
+void fill_waves(game_t *game);
+void fill_bloons(game_t *game);
 void red_bloons(bloons_t *obj);
 void delete_bloon(game_t *game);
 void blue_bloons(bloons_t *obj);
@@ -286,6 +319,7 @@ char *my_strcpy(char *dest, char const *src);
 char **my_strtwa(char const *str, char *limit);
 void *my_memset(void *dest, int value, int length);
 void check_pos(game_t *game, sfRenderWindow *window);
+void game(sfRenderWindow *win, game_t *game_s);
 void display_menu(sfRenderWindow *window, menu_t menu);
 void menu(sfRenderWindow *window, defender_t *defender);
 void intro(sfRenderWindow *window, defender_t *defender);
