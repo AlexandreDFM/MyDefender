@@ -11,7 +11,12 @@
         "random": "c",
         "limits": "c",
         "numeric": "c",
-        "my_defender.h": "c"
+        "my_defender.h": "c",
+        "array": "c",
+        "string_view": "c",
+        "initializer_list": "c",
+        "utility": "c",
+        "cmath": "c"
     },
     "editor.bracketPairColorization.enabled": true,
     "editor.guides.bracketPairs":"active"

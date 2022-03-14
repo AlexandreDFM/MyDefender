@@ -23,6 +23,7 @@ SRC    = main.c								\
 		src/init.c							\
 		src/intro.c							\
 		src/load_bloons.c					\
+		src/monkey.c						\
 		src/waves.c							\
 		src/bloons_color.c					\
 		src/utils/my_atoi.c					\
@@ -30,6 +31,14 @@ SRC    = main.c								\
 		src/utils/my_strdup.c				\
 		src/utils/my_strcpy.c				\
 		src/utils/my_strtwa.c				\
+		src/utils/my_itoa.c					\
+		src/pause.c							\
+		src/tower_nodes.c					\
+		src/tower_hitbox.c					\
+		src/check_towers_placement.c		\
+		src/tower_attack.c					\
+		src/how_to_play.c					\
+		src/settings.c						\
 
 OBJ    = $(SRC:.c=.o)
 
@@ -42,7 +51,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@make -C ./lib/my
-	@$(CC) $(SRC) -o $(NAME) $(LIBFLAG)
+	@$(CC) $(SRC) -o $(NAME) $(LIBFLAG) -lm
 
 clean:
 	@$(RM) $(OBJ)

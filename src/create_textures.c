@@ -11,7 +11,7 @@ char *fill_map(char const *filepath, int total_len)
 {
     char *line_buff = NULL;
     char *map = malloc(sizeof(char) * total_len + 1);
-    memset(map, 0, total_len + 1);
+    my_memset(map, 0, total_len + 1);
     size_t buff_size = 0;
     int line_count = 0, line_len = 0;
     FILE *fp = fopen(filepath, "r");

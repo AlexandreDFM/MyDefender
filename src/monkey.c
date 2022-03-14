@@ -7,71 +7,62 @@
 
 #include "my_defender.h"
 
-monkey_t c_monkey(sfVector2f pos, sfIntRect hitbox, sfVector2f size, int type)
+void fill_r_to(game_t *game)
 {
-    monkey_t monkey;
-    monkey.sprite = sfSprite_create();
-    monkey.texture = sfTexture_createFromFile("./sprites/monkey.png", NULL);
-    monkey.pos = pos;
-    monkey.hitbox = hitbox;
-    monkey.resize = size;
-    sfSprite_setTexture(monkey.sprite, monkey.texture, sfTrue);
-    sfSprite_setPosition(monkey.sprite, monkey.pos);
-    sfSprite_setScale(monkey.sprite, monkey.resize);
-    sfSprite_setTextureRect(monkey.sprite, monkey.hitbox);
-    return monkey;
+    char **temp_rect = NULL;
+    int size_array = 0;
+    for (int i = 1; game->tower_stats[i] != NULL; i += 8, size_array++);
+    sfIntRect *r_to = malloc(sizeof(sfIntRect) * size_array);
+    for (int i = 0, j = 1; i < size_array - 1; j += 9, i++) {
+        temp_rect = my_strtwa(game->tower_stats[j], "|");
+        r_to[i] = (sfIntRect) {my_atoi(temp_rect[1]),
+        my_atoi(temp_rect[2]), my_atoi(temp_rect[3]), my_atoi(temp_rect[4])};
+        temp_rect = NULL;
+    }
+    free(temp_rect);
+    game->r_to = r_to;
 }
 
-void display_monkey(sfRenderWindow *w, monkey_t monkey)
+int tower(int mode)
 {
-    sfSprite_setTexture(monkey.sprite, monkey.texture, sfTrue);
-    sfSprite_setPosition(monkey.sprite, monkey.pos);
-    sfSprite_setTextureRect(monkey.sprite, monkey.hitbox);
-    sfSprite_setScale(monkey.sprite, monkey.resize);
-    sfRenderWindow_drawSprite(w, monkey.sprite, NULL);
+    switch (mode) {
+        case DART_MONKEY :
+            return 0;
+        case TACK_SHOOTER :
+            return 1;
+        case NINJA_MONKEY :
+            return 2;
+        case BOMB_SHOOTER :
+            return 3;
+        case ICE_MONKEY :
+            return 4;
+        case GLUE_GUNNER :
+            return 5;
+        case SUPER_MONKEY :
+            return 6;
+    };
+    return 84;
 }
 
-void check_m_pos(game_t *game, monkey_t monkey)
+void check_thud_hb(sfRenderWindow *w, game_t *g, defender_t *d)
 {
-    unsigned long long int coords = ((game->bloon->pos.x + (game->bloon->dir.x * - 1) * 50) * 4) + ((game->bloon->pos.y + (game->bloon->dir.y * - 1) * 50) * 4 * 1920);
-    if (coords >= 0 && coords <= 2147483647) {
-        sfVector3f color = (sfVector3f) {game->pixels[coords], game->pixels[coords + 1], game->pixels[coords + 2]};
-        for (int i = 0; i < 4; i++) {
-            if (color.x == game->colors[i].x && color.y == game->colors[i].y && color.z == game->colors[i].z) {
-                game->bloon->dir = game->dirs[i];
+    for (int y = 0, monkey = 1; y < 7; y++) {
+        for (int x = 0; x < 2; x++, monkey++) {
+            if (sfFloatRect_contains(&g->tower_box[y][x],
+            d->cursor.pos.x, d->cursor.pos.y) &&
+            d->event.mouseButton.type == sfEvtMouseButtonReleased
+            && d->event.mouseButton.button == sfMouseLeft) {
+                if (tower(monkey) != 84) {
+                    d->cursor.t_to = monkey;
+                    d->cursor.monkey.hitbox = g->r_to[tower(monkey)];
+                    sfSound_play(d->towertk);
+                }
+            } else if (d->cursor.t_to > NO_MONKEY &&
+            d->event.mouseButton.type == sfEvtMouseButtonPressed &&
+            d->event.mouseButton.button == sfMouseLeft) {
+                if (check_t_pl(g, d)) tower_node(w, g, d);
+                d->cursor.t_to = NO_MONKEY;
             }
         }
     }
-}
-
-void add_monkey(game_t *game)
-{
-    monkey_t *obj = malloc(sizeof(monkey_t));
-    monkey_t *last = game->bloon;
-    while (last->next != NULL) last = last->next;
-    obj->prev = last;
-    obj->sprite = sfSprite_create();
-    obj->pos = (sfVector2f) {last->pos.x, last->pos.y - 30};
-    sfSprite_setTexture(obj->sprite, game->t_array[2], sfTrue);
-    sfSprite_setOrigin(obj->sprite, (sfVector2f) {21, 27});
-    // sfSprite_setTextureRect(obj->sprite, (sfIntRect) {0, 0, 42, 54});
-    // obj->dir = game->bloon->dir;
-    obj->next = NULL;
-    last->next = obj;
-}
-
-monkey_t *first_monkey(game_t *game)
-{
-    monkey_t *obj = malloc(sizeof(monkey_t));
-    char **positions = my_strtwa(get_lines("maps/map1"), ":\n");
-    obj->sprite = sfSprite_create();
-    obj->pos = (sfVector2f) {my_atoi(positions[1]), my_atoi(positions[2])};
-    sfSprite_setTexture(obj->sprite, game->t_array[2], sfTrue);
-    sfSprite_setPosition(obj->sprite, obj->pos);
-    sfSprite_setOrigin(obj->sprite, (sfVector2f) {21, 27});
-    sfSprite_setTextureRect(obj->sprite, (sfIntRect) {0, 0, 42, 54});
-    // obj->dir = (sfVector2f) {my_atoi(positions[7]), my_atoi(positions[8])};
-    obj->prev = NULL;
-    obj->next = NULL;
-    return obj;
 }

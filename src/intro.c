@@ -9,6 +9,8 @@
 
 void move_rectintro(defender_t *defender, sfIntRect *rect, int modify, int max_value)
 {
+    if (rect->left == 6128 / 2)
+        sfSound_play(defender->slash);
     if (rect->left >= max_value) {
         rect->left = modify;
         defender->scene = MENU;

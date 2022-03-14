@@ -40,11 +40,9 @@ bloons_t *load_bloons(game_t *game)
 
 void delete_bloon(game_t *game)
 {
-    bloons_t *tmp = game->bloon;
     if (game->bloon == NULL) return;
     if (game->bloon == game->head) game->head = game->bloon->next;
     if (game->bloon->next != NULL) game->bloon->next->prev = game->bloon->prev;
     if (game->bloon->prev != NULL) game->bloon->prev->next = game->bloon->next;
     game->bloon = game->bloon->next;
-    free(tmp);
 }
