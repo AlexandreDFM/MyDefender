@@ -7,25 +7,29 @@
 
 #include "my_defender.h"
 
-void check_tower_radius(game_t *game, defender_t *defender)
+void check_tower_radius(game_t *g, defender_t *defender)
 {
-    while (defender->playing == 1 && game->monkey != NULL) {
-        while (game->bloon != NULL && game->bloon->next != NULL && defender->playing == 1) {
-            if ((game->bloon->pos.x + game->monkey->radius / 2 >= game->monkey->pos.x - game->monkey->radius / 2
-            && game->bloon->pos.x - game->monkey->radius / 2 <= game->monkey->pos.x + game->monkey->radius / 2)
-            && (game->bloon->pos.y + game->monkey->radius / 2 >= game->monkey->pos.y - game->monkey->radius / 2
-            && game->bloon->pos.y - game->monkey->radius / 2 <= game->monkey->pos.y + game->monkey->radius / 2)) {
-                if (game->monkey->blooncibled == NULL) {
-                    game->monkey->blooncibled = game->bloon;
-                    //printf("I'm Monkey at %f %f and I have a ballon in my radius (%d) at %f %f\n", game->monkey->pos.x, game->monkey->pos.y, game->monkey->radius, game->bloon->pos.x, game->bloon->pos.y);
+    while (defender->playing == 1 && g->monkey != NULL) {
+        while (g->bloon != NULL && g->bloon->next != NULL
+        && defender->playing == 1) {
+            if ((g->bloon->pos.x + g->monkey->radius / 2
+            >= g->monkey->pos.x - g->monkey->radius / 2
+            && g->bloon->pos.x - g->monkey->radius / 2
+            <= g->monkey->pos.x + g->monkey->radius / 2)
+            && (g->bloon->pos.y + g->monkey->radius / 2
+            >= g->monkey->pos.y - g->monkey->radius / 2
+            && g->bloon->pos.y - g->monkey->radius / 2
+            <= g->monkey->pos.y + g->monkey->radius / 2)) {
+                if (g->monkey->blooncibled == NULL) {
+                    g->monkey->blooncibled = g->bloon;
                 }
             };
-            game->bloon = game->bloon->next;
+            g->bloon = g->bloon->next;
         }
-        game->bloon = game->head;
-        game->monkey = game->monkey->next;
+        g->bloon = g->head;
+        g->monkey = g->monkey->next;
     }
-    game->monkey = game->monkey_head;
+    g->monkey = g->monkey_head;
 }
 
 void change_enemies_rank(game_t *game, defender_t *defender)
@@ -44,18 +48,23 @@ void tower_launch_attack(game_t *game, defender_t *defender)
 {
     while (defender->playing == 1 && game->monkey != NULL) {
         if (game->monkey->blooncibled != NULL) {
-            //printf("%f\n", atan2f(game->monkey->blooncibled->pos.y - game->monkey->pos.y, game->monkey->blooncibled->pos.x - game->monkey->pos.x) * 360.0 / 3.14 - 180);
-            sfSprite_setRotation(game->monkey->sprite, atan2f(game->monkey->blooncibled->pos.y - game->monkey->pos.y, game->monkey->blooncibled->pos.x - game->monkey->pos.x) * 360.0 / 3.14 - 180);
+            sfSprite_setRotation(game->monkey->sprite,
+            atan2f(game->monkey->blooncibled->pos.y -
+            game->monkey->pos.y, game->monkey->blooncibled->pos.x
+            - game->monkey->pos.x) * 360.0 / 3.14 - 180);
         }
-        //printf("%lld\n", sfClock_getElapsedTime(game->monkey->clockattack).microseconds);
-        if (game->monkey->blooncibled != NULL && sfClock_getElapsedTime(game->monkey->clockattack).microseconds > (6000000 / game->monkey->attackspeed)) {
+        if (game->monkey->blooncibled != NULL &&
+        sfClock_getElapsedTime(game->monkey->clockattack).microseconds
+        > (60 / game->monkey->attackspeed) * 1000000 / game->ff) {
+            game->money += 1;
             game->monkey->blooncibled->health -= game->monkey->damage;
             sfSound_play(defender->pop[rand() % 4]);
             sfClock_restart(game->monkey->clockattack);
         }
         if (game->monkey->blooncibled != NULL)
             change_enemies_rank(game, defender);
-        if (game->monkey->blooncibled != NULL && game->monkey->blooncibled->health <= 0) {
+        if (game->monkey->blooncibled != NULL
+        && game->monkey->blooncibled->health <= 0) {
             game->monkey->blooncibled = NULL;
         }
         game->monkey = game->monkey->next;
@@ -65,7 +74,8 @@ void tower_launch_attack(game_t *game, defender_t *defender)
 
 void bloons_check_is_life(game_t *game, defender_t *defender)
 {
-    while (defender->playing == 1 && game->bloon != NULL && game->bloon->next != NULL) {
+    while (defender->playing == 1 &&
+    game->bloon != NULL && game->bloon->next != NULL) {
         if (game->bloon->health <= 0) {
             delete_bloon(game);
         }

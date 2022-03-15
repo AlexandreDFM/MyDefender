@@ -82,5 +82,13 @@ int check_t_pl(game_t *g, defender_t *d)
     if (!check_aa(g, d)) return 0;
     if (!check_bb(g, d)) return 0;
     if (!check_on_tower(g, d)) return 0;
+    if (tower(d->cursor.t_to) == 84) return 0;
+    char **money = my_strtwa(g->tower_stats[tower(d->cursor.t_to) == 0
+    ? 1 : tower(d->cursor.t_to) * 9 + 1], "|");
+    if (money[20] == NULL || g->money <= my_atoi(money[20])) {
+        my_free_array(money);
+        return 0;
+    };
+    my_free_array(money);
     return 1;
 }

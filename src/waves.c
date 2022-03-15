@@ -9,7 +9,8 @@
 
 void fill_waves(game_t *game)
 {
-    void (*func_array[])(bloons_t *bloon) = {red_bloons, blue_bloons, green_bloons, yellow_bloons};
+    void (*func_array[])(bloons_t *bloon) =
+    {red_bloons, blue_bloons, green_bloons, yellow_bloons};
     int i = game->wave_ind, j = 0;
     int count = 0;
     for (; game->waves[i][0] != '#'; i++) {
@@ -18,7 +19,8 @@ void fill_waves(game_t *game)
     for (int i = 0; i < count; i++) fill_bloons(game);
     game->bloon = game->head;
     for (i = game->wave_ind; game->waves[i][0] != '#'; i++) {
-        for (j = 0; game->waves[i][0] != game->b_colors[j] && game->b_colors[j] != 0; j++);
+        for (j = 0; game->waves[i][0] != game->b_colors[j]
+        && game->b_colors[j] != 0; j++);
         i++;
         count = my_atoi(game->waves[i]);
         for (int ind = 0; ind < count; ind++) {
@@ -29,6 +31,7 @@ void fill_waves(game_t *game)
     }
     game->bloon = game->head;
     game->wave_ind = i + 1;
+    game->wave_nb += 1;
 }
 
 char **init_waves(void)

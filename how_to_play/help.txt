@@ -1,1 +1,9 @@
 This is the how to play menu.
+
+This game is a reproduction of Bloons TD 5.
+
+The objective of the game is to kill Bloons with Monkey equipped by Darts.
+You can place a monkey were you want if it's logical, not on the road, or trees.
+Bloons follow the road, if they arrives to the end of the road you lost a live.
+If you have no more life, you have lost.
+Be the best Monkey by killing all the bloons !

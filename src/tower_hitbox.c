@@ -10,19 +10,19 @@
 void fill_recthudtowers(game_t *game)
 {
     int x_first = 1508;
-    int y_first = 200;
+    int y_first = 190;
     sfFloatRect **tower_box = malloc(sizeof(sfFloatRect *) * 8);
     tower_box[7] = NULL;
     for (int i = 0; i < 7; i++) {
         tower_box[i] = malloc(sizeof(sfFloatRect) * 2);
         for (int j = 0; j < 2; j++, x_first += 88) {
             tower_box[i][j] = (sfFloatRect) {x_first, y_first,
-            113 * 0.7017543859649123, 93 * 0.7017543859649123};
+            113 * 0.7017543859649123, 93 * 0.668181818182};
         }
-        y_first += 87;
+        y_first += 83;
         x_first = 1508;
         if (i == 5)
-            y_first += 81;
+            y_first += 77;
     }
     game->tower_box = tower_box;
 }

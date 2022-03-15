@@ -36,7 +36,14 @@ void display_monkey(sfRenderWindow *w, monkey_t monkey)
     sfRenderWindow_drawSprite(w, monkey.sprite, NULL);
 }
 
-void display_monkey_hb(sfRenderWindow *w, c_hb_t hb_monkey)
+void display_rect_hb(sfRenderWindow *w, r_hb_t hb)
+{
+    sfRectangleShape_setFillColor(hb.shape, hb.color);
+    sfRectangleShape_setPosition(hb.shape, hb.pos);
+    sfRenderWindow_drawRectangleShape(w, hb.shape, NULL);
+}
+
+void display_circle_hb(sfRenderWindow *w, c_hb_t hb_monkey)
 {
     sfCircleShape_setFillColor(hb_monkey.shape, hb_monkey.color);
     sfCircleShape_setRadius(hb_monkey.shape, hb_monkey.radius);

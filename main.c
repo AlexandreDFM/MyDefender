@@ -7,8 +7,6 @@
 
 #include "my_defender.h"
 
-
-
 int main(int argc, char **argv)
 {
     srand(0);

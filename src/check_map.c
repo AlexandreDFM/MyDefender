@@ -17,6 +17,7 @@ void check_pos(game_t *game, sfRenderWindow *window)
         game->pixels[coords + 1], game->pixels[coords + 2]};
         if (color.x == game->colors[4].x && color.y ==
             game->colors[4].y && color.z == game->colors[4].z) {
+            game->health -= game->bloon->damage;
             delete_bloon(game);
             return;
         }
