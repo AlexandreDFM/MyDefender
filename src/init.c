@@ -73,7 +73,7 @@ defender_t init(void)
     defender.cursor = create_cursor("./sprites/cursor.png",
     (sfVector2f) {0, 0}, (sfIntRect) {0, 0, 64, 64});
     defender.clockintro = sfClock_create();
-    defender.scene = GAME;
+    defender.scene = INTRO;
     defender.playing = 0;
     defender.state = 0;
     defender.aplay = 0;
