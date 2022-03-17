@@ -40,6 +40,9 @@ void display_rect_hb(sfRenderWindow *w, r_hb_t hb)
 {
     sfRectangleShape_setFillColor(hb.shape, hb.color);
     sfRectangleShape_setPosition(hb.shape, hb.pos);
+    sfRectangleShape_setSize(hb.shape, (sfVector2f)
+    {hb.rect.width, hb.rect.height});
+    sfRectangleShape_setTextureRect(hb.shape, hb.rect);
     sfRenderWindow_drawRectangleShape(w, hb.shape, NULL);
 }
 

@@ -7,22 +7,16 @@
 
 #include "my_defender.h"
 
-void is_bouton_2(sfRenderWindow *window, defender_t *defender)
+void change_bouton_leave_htp(sfRenderWindow *w, defender_t *d)
 {
-    float posmousex = sfMouse_getPositionRenderWindow(window).x;
-    float posmousey = sfMouse_getPositionRenderWindow(window).y;
-    for (int i = 0; i < 4; i++) {
-        sfFloatRect b = {defender->bouton[i].pos.x, defender->bouton[i].pos.y,
-        defender->bouton[i].rect.width * defender->bouton[i].resize.x,
-        defender->bouton[i].rect.height * defender->bouton[i].resize.y};
-        defender->valid[i] = sfFloatRect_contains(&b, posmousex, posmousey);
-        if (defender->valid[i] == 1 && sfMouse_isButtonPressed(sfMouseLeft))
-            defender->bouton[i].rect.left = 318;
-        else if (defender->valid[i] == 1)
-            defender->bouton[i].rect.left = 159;
-        else
-            defender->bouton[i].rect.left = 0;
-    }
+    sfFloatRect rectleave = sfSprite_getGlobalBounds(d->htp_leave.sprite);
+    int leave = sfFloatRect_contains(&rectleave, d->cursor.pos.x, d->cursor.pos.y);
+    if (leave == 1 && sfMouse_isButtonPressed(sfMouseLeft))
+        d->htp_leave.rect.left = 3194 + 560;
+    else if (leave == 1)
+        d->htp_leave.rect.left = 3194 + 280;
+    else
+        d->htp_leave.rect.left = 3194;
 }
 
 void switch_window_2(sfRenderWindow *window, defender_t *defender)
@@ -50,5 +44,16 @@ void how_to_play(sfRenderWindow *win, defender_t *defender)
     if (sfMusic_getStatus(defender->menu_music) == 0)
         sfMusic_play(defender->menu_music);
     display_go(win, defender->menu);
+    display_rect_hb(win, defender->htpback);
     sfRenderWindow_drawText(win, defender->help_txt, NULL);
+    display_go(win, defender->htp_leave);
+    sfFloatRect recthtp_leave = sfSprite_getGlobalBounds(defender->htp_leave.sprite);
+    if (sfMouse_isButtonPressed(sfMouseLeft))
+        defender->settings_click = 1;
+    if (sfFloatRect_contains(&recthtp_leave, defender->cursor.pos.x, defender->cursor.pos.y)
+    && defender->event.type == sfEvtMouseButtonReleased && defender->event.mouseButton.button == sfMouseLeft) {
+        defender->settings_click = 0;
+        defender->scene = MENU;
+    }
+    change_bouton_leave_htp(win, defender);
 }

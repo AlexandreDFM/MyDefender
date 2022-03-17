@@ -28,6 +28,7 @@ void monkey_up_display(sfRenderWindow *w, game_t *game, defender_t *defender)
     sfRenderWindow_drawSprite(w, game->monkey->sprite, NULL);
     display_go(w, game->monkey->avatar);
     skill_tree_display(w, game);
+    // sfRenderWindow_drawRectangleShape(w, game->monkey->hitbox_sell.shape, NULL);
     sfRenderWindow_drawText(w, game->monkey->sell, NULL);
     sfRenderWindow_drawText(w, game->monkey->priority, NULL);
 }
@@ -38,7 +39,7 @@ void monkey_upgrade(sfRenderWindow *w, game_t *game, defender_t *defender)
     sfText_setString(game->monkey->sell, "SELL");
     sfText_setFont(game->monkey->sell, game->font);
     sfText_setCharacterSize(game->monkey->sell, 40);
-    sfText_setPosition(game->monkey->sell, (sfVector2f) {650, 950});
+    sfText_setPosition(game->monkey->sell, (sfVector2f) {650, 905});
     game->monkey->priority = sfText_create();
     sfText_setString(game->monkey->priority, "PRIORITY");
     sfText_setFont(game->monkey->priority, game->font);
@@ -47,7 +48,7 @@ void monkey_upgrade(sfRenderWindow *w, game_t *game, defender_t *defender)
     game->monkey->hitbox_sell.shape = sfRectangleShape_create();
     game->monkey->hitbox_sell.rect = (sfIntRect) {0, 0, 165, 45};
     game->monkey->hitbox_sell.color = (sfColor) {0, 0, 255, 100};
-    game->monkey->hitbox_sell.pos = (sfVector2f) {610, 950};
+    game->monkey->hitbox_sell.pos = (sfVector2f) {610, 910};
     sfRectangleShape_setFillColor(game->monkey->hitbox_sell.shape,
     game->monkey->hitbox_sell.color);
     sfRectangleShape_setSize(game->monkey->hitbox_sell.shape,
@@ -57,7 +58,7 @@ void monkey_upgrade(sfRenderWindow *w, game_t *game, defender_t *defender)
     game->monkey->hitbox_sell.pos);
 }
 
-void monkey_management(sfRenderWindow *w, game_t *game, defender_t *defender)
+void monkey_management(sfRenderWindow *w, game_t *game, defender_t *d)
 {
     while (game->monkey != NULL) {
         sfRenderWindow_drawSprite(w, game->monkey->sprite, NULL);
@@ -65,23 +66,27 @@ void monkey_management(sfRenderWindow *w, game_t *game, defender_t *defender)
         sfFloatRect s_rect =
         sfRectangleShape_getGlobalBounds(game->monkey->hitbox_sell.shape);
         if (sfMouse_isButtonPressed(sfMouseLeft) &&
-        defender->cursor.t_to == MONKEY_SELECT
-        && game->monkey->clicked == TRUE) defender->cursor.t_to = NO_MONKEY;
-        if (defender->cursor.t_to == NO_MONKEY &&
-        sfFloatRect_contains(&s_rect, defender->cursor.pos.x,
-        defender->cursor.pos.y) && sfMouse_isButtonPressed(sfMouseLeft)) {
+        d->cursor.t_to == MONKEY_SELECT
+        && game->monkey->clicked == TRUE) d->cursor.t_to = NO_MONKEY;
+        if (d->cursor.t_to == NO_MONKEY &&
+        sfFloatRect_contains(&s_rect, d->cursor.pos.x,
+        d->cursor.pos.y) && sfMouse_isButtonPressed(sfMouseLeft)) {
+            // char **stats = my_strtwa(game->tower_stats[tower(game->monkey->type) == 0
+            // ? 1 : tower(game->monkey->type) * 9 + 1], "|");
+            // game->money += my_atoi(stats[20]);
+            // sfSound_play(d->towerdl);
+            // free(stats);
             delete_tower(game);
-            sfSound_play(defender->towerdl);
         }
-        if (defender->cursor.t_to == NO_MONKEY &&
-        sfFloatRect_contains(&rect, defender->cursor.pos.x,
-        defender->cursor.pos.y) && sfMouse_isButtonPressed(sfMouseLeft)) {
-            defender->cursor.t_to = MONKEY_SELECT;
+        if (d->cursor.t_to == NO_MONKEY &&
+        sfFloatRect_contains(&rect, d->cursor.pos.x,
+        d->cursor.pos.y) && sfMouse_isButtonPressed(sfMouseLeft)) {
+            d->cursor.t_to = MONKEY_SELECT;
             game->monkey->clicked = TRUE;
-            monkey_upgrade(w, game, defender);
-        } else if (defender->cursor.t_to == MONKEY_SELECT
+            monkey_upgrade(w, game, d);
+        } else if (d->cursor.t_to == MONKEY_SELECT
         && game->monkey->clicked == TRUE) {
-            monkey_up_display(w, game, defender);
+            monkey_up_display(w, game, d);
         } else {
             if (game->monkey != NULL)
                 game->monkey->clicked = FALSE;

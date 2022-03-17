@@ -14,7 +14,7 @@ void fill_bloons(game_t *game)
     while (last->next != NULL) last = last->next;
     obj->prev = last;
     obj->sprite = sfSprite_create();
-    obj->pos = (sfVector2f) {last->pos.x, last->pos.y - 30};
+    obj->pos = (sfVector2f) {last->pos.x - 30 * last->dir.x, last->pos.y - 30 * last->dir.y};
     sfSprite_setTexture(obj->sprite, game->t_array[2], sfTrue);
     sfSprite_setOrigin(obj->sprite, (sfVector2f) {21, 27});
     obj->dir = game->bloon->dir;
@@ -22,10 +22,16 @@ void fill_bloons(game_t *game)
     last->next = obj;
 }
 
-bloons_t *load_bloons(game_t *game)
+bloons_t *load_bloons(defender_t *defender, game_t *game)
 {
     bloons_t *obj = malloc(sizeof(bloons_t));
-    char **positions = my_strtwa(get_lines("maps/map1"), ":\n");
+    char **positions = NULL;
+    if (defender->map_select == 1)
+        positions = my_strtwa(get_lines("maps/map1"), ":\n");
+    else if (defender->map_select == 2)
+        positions = my_strtwa(get_lines("maps/map2"), ":\n");
+    else
+        positions = my_strtwa(get_lines("maps/map3"), ":\n");
     obj->sprite = sfSprite_create();
     obj->pos = (sfVector2f) {my_atoi(positions[1]), my_atoi(positions[2])};
     sfSprite_setTexture(obj->sprite, game->t_array[2], sfTrue);

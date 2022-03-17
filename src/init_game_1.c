@@ -25,11 +25,11 @@ void init_textures5(game_t *game)
     sfText_setStyle(game->wav, 1);
 }
 
-void init_textures4(game_t *game)
+void init_textures4(defender_t *defender, game_t *game)
 {
     game->pixels = malloc(sizeof(sfUint8 *));
     game->pixels = sfImage_getPixelsPtr(game->map_c);
-    game->bloon = load_bloons(game);
+    game->bloon = load_bloons(defender, game);
     game->head = game->bloon;
     sfVector3f colors[5] = {{0, 51, 255}, {0, 255, 72},
     {197, 0, 0}, {158, 0, 197}, {255, 106, 0}};
@@ -47,7 +47,7 @@ void init_textures4(game_t *game)
     init_textures5(game);
 }
 
-void init_textures3(game_t *game)
+void init_textures3(defender_t *defender, game_t *game)
 {
     sfSprite_setTexture(game->hud, game->t_array[0], sfTrue);
     sfSprite_setTexture(game->map, game->t_array[1], sfTrue);
@@ -59,11 +59,17 @@ void init_textures3(game_t *game)
     0.668181818182});
     sfSprite_setScale(game->up_gui, (sfVector2f) {0.7017543859649123,
     0.668181818182});
-    game->map_c = sfImage_createFromFile("maps/map_test.png");
-    init_textures4(game);
+    if (defender->map_select == 1)
+        game->map_c = sfImage_createFromFile("maps/map1-1.png");
+    else if (defender->map_select == 2) {
+        game->map_c = sfImage_createFromFile("maps/map2-2.png");
+    } else {
+        game->map_c = sfImage_createFromFile("maps/map3-3.png");
+    }
+    init_textures4(defender, game);
 }
 
-void init_textures2(game_t *game)
+void init_textures2(defender_t *defender, game_t *game)
 {
     game->hud = sfSprite_create();
     game->map = sfSprite_create();
@@ -81,14 +87,20 @@ void init_textures2(game_t *game)
         sfSprite_setOrigin(game->p_but[i].sprite,
         (sfVector2f) {126 / 2, 127 / 2});
     }
-    init_textures3(game);
+    init_textures3(defender, game);
 }
 
-void init_textures(game_t *g)
+void init_textures(defender_t *defender, game_t *g)
 {
     g->cleared = 0;
     int i = 0;
-    char **array = my_strtwa(get_lines("sprites/textures.txt"), "\n");
+    char **array = NULL;
+    if (defender->map_select == 1)
+        array = my_strtwa(get_lines("sprites/textures_1.txt"), "\n");
+    else if (defender->map_select == 2)
+        array = my_strtwa(get_lines("sprites/textures_2.txt"), "\n");
+    else
+        array = my_strtwa(get_lines("sprites/textures_3.txt"), "\n");
     for (; array[i] != 0; i++);
     sfTexture **t_array = malloc(sizeof(sfTexture *) * (i + 1));
     for (int j = 0; j < i - 1; j++)
@@ -103,5 +115,5 @@ void init_textures(game_t *g)
     fill_r_to(g);
     g->gameoverscreen = c_r_hitbox((sfVector2f) {0, 0}, (sfIntRect)
     {0, 0, 1920, 1029}, (sfVector2f) {1, 1}, (sfColor) {0, 0, 0, 100});
-    init_textures2(g);
+    init_textures2(defender, g);
 }

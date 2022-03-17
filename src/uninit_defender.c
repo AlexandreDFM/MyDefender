@@ -51,7 +51,7 @@ void uninit(defender_t *defender)
 
 void all_uninit(defender_t *defender, game_t *game)
 {
-    uninit(defender);
     if (game->cleared == 0)
-        uninit_textures(game);
+        uninit_textures(defender, game);
+    uninit(defender);
 }

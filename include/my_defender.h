@@ -34,6 +34,10 @@ enum scene_t {
     SETTINGS,
     HOW_TO_PLAY,
     GAME,
+    MAP_SELECT,
+    GAME1,
+    GAME2,
+    GAME3,
     PAUSE,
     GAMEOVER,
     GAMEWIN,
@@ -231,9 +235,28 @@ typedef struct defender {
     int state;
     int aplay;
     int valid[4];
+    int fps;
+    int settings_click;
+    int map_select;
+    int volume_buf;
+    int volume_buf2;
+    int volume_music;
     go_t intro;
     go_t title;
     go_t menu;
+    go_t settings;
+    go_t settings_b;
+    go_t settings_c;
+    go_t settings_l;
+    go_t htp_leave;
+    go_t map_select_b;
+    go_t map_select_m[4];
+    go_t map_select_bl;
+    go_t map_select_br;
+    go_t map_select_l;
+    bouton_t map_select_go;
+    r_hb_t settings_bar;
+    r_hb_t htpback;
     cursor_t cursor;
     bouton_t bouton[4];
     pause_t p_menu;
@@ -269,9 +292,10 @@ void fill_bloons(game_t *game);
 void delete_tower(game_t *game);
 void my_free_array(char **array);
 void fill_tower_box(game_t *game);
-void uninit_textures(game_t *game);
+void uninit_textures(defender_t *defender, game_t *game);
 void fill_debug_t_box(game_t *game);
 char *get_lines(char const *filepath);
+void select_map(sfRenderWindow *w, defender_t *defender, game_t *game);
 void tower_attack(game_t *game, defender_t *defender);
 void check_thud_hb(sfRenderWindow *w, game_t *g, defender_t *d);
 void tower_node(sfRenderWindow *w, game_t *game, defender_t *defender);
@@ -294,7 +318,7 @@ char *my_strcat_alloc(char *dest, char const *src);
 void draw_score(sfRenderWindow *win, game_t *game, defender_t *defender);
 void fill_r_to(game_t *game);
 char **init_waves(void);
-void init_textures(game_t *game);
+void init_textures(defender_t *defender, game_t *game);
 char *my_strdup(char *src);
 int my_atoi(char const *str);
 void fill_waves(game_t *game);
@@ -304,7 +328,7 @@ void delete_bloon(game_t *game);
 void blue_bloons(bloons_t *obj);
 void green_bloons(bloons_t *obj);
 void yellow_bloons(bloons_t *obj);
-bloons_t *load_bloons(game_t *game);
+bloons_t *load_bloons(defender_t *defender, game_t *game);
 char *get_lines(char const *filepath);
 void display_go(sfRenderWindow *w, go_t go);
 char *my_strcpy(char *dest, char const *src);

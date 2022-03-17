@@ -35,6 +35,7 @@ SRC    = main.c								\
 		src/bloons_color.c					\
 		src/pause.c							\
 		src/skill_tree.c					\
+		src/select_map.c					\
 		src/tower_nodes.c					\
 		src/tower_hitbox.c					\
 		src/check_towers_placement.c		\

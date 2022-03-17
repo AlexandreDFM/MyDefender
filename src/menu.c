@@ -30,9 +30,7 @@ void switch_window(sfRenderWindow *window, defender_t *defender, game_t *game)
     if (defender->event.mouseButton.type == sfEvtMouseButtonReleased
     && defender->event.mouseButton.button == sfMouseLeft) {
         if (defender->valid[0]) {
-            sfMusic_stop(defender->menu_music);
-            init_textures(game);
-            defender->scene = GAME;
+            defender->scene = MAP_SELECT;
         }
         if (defender->valid[1]) {
             defender->scene = SETTINGS;

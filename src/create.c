@@ -64,6 +64,7 @@ r_hb_t c_r_hitbox(sfVector2f pos, sfIntRect rect, sfVector2f size, sfColor c)
     sfRectangleShape_setFillColor(r_hb.shape, r_hb.color);
     sfRectangleShape_setSize(r_hb.shape, (sfVector2f)
     {rect.width, rect.height});
+    sfRectangleShape_setTextureRect(r_hb.shape, r_hb.rect);
     sfRectangleShape_setPosition(r_hb.shape, r_hb.pos);
     return r_hb;
 }

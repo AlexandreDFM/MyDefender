@@ -45,8 +45,8 @@ void d_cursor_2(sfRenderWindow *w, game_t *g, defender_t *d, cursor_t cur)
 
 void d_cursor(sfRenderWindow *w, game_t *g, defender_t *d, cursor_t cur)
 {
-    cur.pos.x = (float) sfMouse_getPositionRenderWindow(w).x;
-    cur.pos.y = (float) sfMouse_getPositionRenderWindow(w).y;
+    d->cursor.pos.x = (float) sfMouse_getPositionRenderWindow(w).x;
+    d->cursor.pos.y = (float) sfMouse_getPositionRenderWindow(w).y;
     cur.monkey.pos.x = cur.pos.x;
     cur.monkey.pos.y = cur.pos.y;
     cur.monkey_c.pos.x = cur.pos.x;

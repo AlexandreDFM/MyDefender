@@ -19,7 +19,7 @@ void add_icons_2(game_t *game, defender_t *d, monkey_t *obj, char **stats)
     obj->hitbox_sell.shape = sfRectangleShape_create();
     obj->hitbox_sell.rect = (sfIntRect) {0, 0, 165, 45};
     obj->hitbox_sell.color = (sfColor) {0, 0, 255, 100};
-    obj->hitbox_sell.pos = (sfVector2f) {610, 950};
+    obj->hitbox_sell.pos = (sfVector2f) {610, 905};
     sfRectangleShape_setFillColor(obj->hitbox_sell.shape,
     obj->hitbox_sell.color);
     sfRectangleShape_setSize(obj->hitbox_sell.shape,

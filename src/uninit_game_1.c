@@ -17,10 +17,16 @@ void uninit_textures_2(game_t *game)
     game->cleared = 1;
 }
 
-void uninit_textures(game_t *game)
+void uninit_textures(defender_t *defender, game_t *game)
 {
     int i = 0;
-    char **array = my_strtwa(get_lines("sprites/textures.txt"), "\n");
+    char **array = NULL;
+    if (defender->map_select == 1)
+        array = my_strtwa(get_lines("sprites/textures_1.txt"), "\n");
+    else if (defender->map_select == 2)
+        array = my_strtwa(get_lines("sprites/textures_2.txt"), "\n");
+    else
+        array = my_strtwa(get_lines("sprites/textures_3.txt"), "\n");
     for (; array[i] != 0; i++);
     for (int j = 0; j < i - 1; j++)
         sfTexture_destroy(game->t_array[j]);

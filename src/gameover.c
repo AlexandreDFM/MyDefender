@@ -13,7 +13,7 @@ void switch_window_go(sfRenderWindow *w, defender_t *d, game_t *game)
     && d->event.mouseButton.button == sfMouseLeft) {
         if (d->valid[0]) {
             sfMusic_stop(d->menu_music);
-            init_textures(game);
+            init_textures(d, game);
             d->scene = GAME;
         }
         if (d->valid[1]) {

@@ -35,6 +35,8 @@ void switch_display(sfRenderWindow *w, defender_t *defender, game_t *game_s)
         settings(w, defender);
     if (defender->scene == HOW_TO_PLAY)
         how_to_play(w, defender);
+    if (defender->scene == MAP_SELECT)
+        select_map(w, defender, game_s);
     if (defender->scene == GAME)
         game(w, game_s, defender);
     if (defender->scene == PAUSE)
