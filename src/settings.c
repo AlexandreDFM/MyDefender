@@ -10,10 +10,10 @@
 void change_bouton_leave_set(sfRenderWindow *w, defender_t *d)
 {
     sfFloatRect rectleave = sfSprite_getGlobalBounds(d->settings_l.sprite);
-    int leave = sfFloatRect_contains(&rectleave, d->cursor.pos.x, d->cursor.pos.y);
-    if (leave == 1 && sfMouse_isButtonPressed(sfMouseLeft))
+    int l = sfFloatRect_contains(&rectleave, d->cursor.pos.x, d->cursor.pos.y);
+    if (l == 1 && sfMouse_isButtonPressed(sfMouseLeft))
         d->settings_l.rect.left = 3194 + 560;
-    else if (leave == 1)
+    else if (l == 1)
         d->settings_l.rect.left = 3194 + 280;
     else
         d->settings_l.rect.left = 3194;
@@ -43,96 +43,103 @@ void change_volume(sfRenderWindow *win, defender_t *d, int offset)
     }
 }
 
-void bar_volume(sfRenderWindow *win, defender_t *defender)
+void bar_volume(sfRenderWindow *win, defender_t *def)
 {
-    sfFloatRect rectlarrow = (sfFloatRect) {707, 393, 50, 62};
-    sfFloatRect rectrarrow = (sfFloatRect) {1167, 392, 50, 62};
-    if (sfFloatRect_contains(&rectlarrow, defender->cursor.pos.x, defender->cursor.pos.y)
-    && defender->event.type == sfEvtMouseButtonReleased && defender->event.mouseButton.button == sfMouseLeft) {
-        if (defender->settings_bar.rect.width > 0 && defender->settings_click == 1) {
-            change_volume(win, defender, -10);
-            defender->settings_bar.rect.width -= 51;
-            defender->settings_click = 0;
+    sfFloatRect rlarrow = (sfFloatRect) {707, 393, 50, 62};
+    sfFloatRect rrarrow = (sfFloatRect) {1167, 392, 50, 62};
+    if (sfFloatRect_contains(&rlarrow, def->cursor.pos.x, def->cursor.pos.y)
+    && def->event.type == sfEvtMouseButtonReleased &&
+    def->event.mouseButton.button == sfMouseLeft) {
+        if (def->settings_bar.rect.width > 0 && def->settings_click == 1) {
+            change_volume(win, def, -10);
+            def->settings_bar.rect.width -= 51;
+            def->settings_click = 0;
         }
     }
-    if (sfFloatRect_contains(&rectrarrow, defender->cursor.pos.x, defender->cursor.pos.y)
-    && defender->event.type == sfEvtMouseButtonReleased && defender->event.mouseButton.button == sfMouseLeft) {
-        if (defender->settings_bar.rect.width < 510 && defender->settings_click == 1) {
-            change_volume(win, defender, +10);
-            defender->settings_bar.rect.width += 51;
-            defender->settings_click = 0;
+    if (sfFloatRect_contains(&rrarrow, def->cursor.pos.x, def->cursor.pos.y)
+    && def->event.type == sfEvtMouseButtonReleased &&
+    def->event.mouseButton.button == sfMouseLeft) {
+        if (def->settings_bar.rect.width < 510 && def->settings_click == 1) {
+            change_volume(win, def, +10);
+            def->settings_bar.rect.width += 51;
+            def->settings_click = 0;
         }
     }
 }
 
-void click_fps2(sfRenderWindow *win, defender_t *defender)
+void click_fps2(sfRenderWindow *win, defender_t *def)
 {
-    sfFloatRect box3 = (sfFloatRect) {669 + 35 + 44 + 78 + 35 + 78, 560, 44, 47};
-    sfFloatRect box4 = (sfFloatRect) {669 + 35 + 44 + 78 + 35 + 78 + 44 + 86, 560, 44, 47};
-    if (sfFloatRect_contains(&box3, defender->cursor.pos.x, defender->cursor.pos.y)
-    && defender->event.type == sfEvtMouseButtonReleased && defender->event.mouseButton.button == sfMouseLeft) {
-        if (defender->settings_click == 1) {
-            defender->settings_c.pos = (sfVector2f) {669 + 35 + 44 + 78 + 35 + 75, 560};
-            defender->fps = 120;
-            sfRenderWindow_setFramerateLimit(win, defender->fps);
-            defender->settings_click = 0;
+    sfFloatRect box3 = (sfFloatRect) {939, 560, 44, 47};
+    sfFloatRect box4 = (sfFloatRect) {1069, 560, 44, 47};
+    if (sfFloatRect_contains(&box3, def->cursor.pos.x, def->cursor.pos.y)
+    && def->event.type == sfEvtMouseButtonReleased &&
+    def->event.mouseButton.button == sfMouseLeft) {
+        if (def->settings_click == 1) {
+            def->settings_c.pos = (sfVector2f) {936, 560};
+            def->fps = 120;
+            sfRenderWindow_setFramerateLimit(win, def->fps);
+            def->settings_click = 0;
         }
     }
-    if (sfFloatRect_contains(&box4, defender->cursor.pos.x, defender->cursor.pos.y)
-    && defender->event.type == sfEvtMouseButtonReleased && defender->event.mouseButton.button == sfMouseLeft) {
-        if (defender->settings_click == 1) {
-            defender->settings_c.pos = (sfVector2f) {669 + 35 + 44 + 78 + 35 + 78 + 44 + 86, 560};
-            defender->fps = 0;
-            sfRenderWindow_setFramerateLimit(win, defender->fps);
-            defender->settings_click = 0;
+    if (sfFloatRect_contains(&box4, def->cursor.pos.x, def->cursor.pos.y)
+    && def->event.type == sfEvtMouseButtonReleased &&
+    def->event.mouseButton.button == sfMouseLeft) {
+        if (def->settings_click == 1) {
+            def->settings_c.pos = (sfVector2f) {1069, 560};
+            def->fps = 0;
+            sfRenderWindow_setFramerateLimit(win, def->fps);
+            def->settings_click = 0;
         }
     }
 }
 
-void click_fps(sfRenderWindow *win, defender_t *defender)
+void click_fps(sfRenderWindow *win, defender_t *def)
 {
     sfFloatRect box1 = (sfFloatRect) {669 + 35, 560, 44, 47};
     sfFloatRect box2 = (sfFloatRect) {669 + 35 + 44 + 78, 560, 44, 47};
-    if (sfFloatRect_contains(&box1, defender->cursor.pos.x, defender->cursor.pos.y)
-    && defender->event.type == sfEvtMouseButtonReleased && defender->event.mouseButton.button == sfMouseLeft) {
-        if (defender->settings_click == 1) {
-            defender->settings_c.pos = (sfVector2f) {669 + 35, 560};
-            defender->fps = 30;
-            sfRenderWindow_setFramerateLimit(win, defender->fps);
-            defender->settings_click = 0;
+    if (sfFloatRect_contains(&box1, def->cursor.pos.x, def->cursor.pos.y)
+    && def->event.type == sfEvtMouseButtonReleased &&
+    def->event.mouseButton.button == sfMouseLeft) {
+        if (def->settings_click == 1) {
+            def->settings_c.pos = (sfVector2f) {669 + 35, 560};
+            def->fps = 30;
+            sfRenderWindow_setFramerateLimit(win, def->fps);
+            def->settings_click = 0;
         }
     }
-    if (sfFloatRect_contains(&box2, defender->cursor.pos.x, defender->cursor.pos.y)
-    && defender->event.type == sfEvtMouseButtonReleased && defender->event.mouseButton.button == sfMouseLeft) {
-        if (defender->settings_click == 1) {
-            defender->settings_c.pos = (sfVector2f) {669 + 35 + 44 + 78, 560};
-            defender->fps = 60;
-            sfRenderWindow_setFramerateLimit(win, defender->fps);
-            defender->settings_click = 0;
+    if (sfFloatRect_contains(&box2, def->cursor.pos.x, def->cursor.pos.y)
+    && def->event.type == sfEvtMouseButtonReleased &&
+    def->event.mouseButton.button == sfMouseLeft) {
+        if (def->settings_click == 1) {
+            def->settings_c.pos = (sfVector2f) {669 + 35 + 44 + 78, 560};
+            def->fps = 60;
+            sfRenderWindow_setFramerateLimit(win, def->fps);
+            def->settings_click = 0;
         }
     }
-    click_fps2(win, defender);
+    click_fps2(win, def);
 }
 
-void settings(sfRenderWindow *win, defender_t *defender)
+void settings(sfRenderWindow *win, defender_t *def)
 {
-    if (sfMusic_getStatus(defender->menu_music) == 0)
-        sfMusic_play(defender->menu_music);
-    display_go(win, defender->menu);
-    display_go(win, defender->settings_b);
-    display_rect_hb(win, defender->settings_bar);
-    display_go(win, defender->settings);
-    display_go(win, defender->settings_c);
-    display_go(win, defender->settings_l);
-    sfFloatRect rectsettings_l = sfSprite_getGlobalBounds(defender->settings_l.sprite);
+    if (sfMusic_getStatus(def->menu_music) == 0)
+        sfMusic_play(def->menu_music);
+    display_go(win, def->menu);
+    display_go(win, def->settings_b);
+    display_rect_hb(win, def->settings_bar);
+    display_go(win, def->settings);
+    display_go(win, def->settings_c);
+    display_go(win, def->settings_l);
+    sfFloatRect rs_l = sfSprite_getGlobalBounds(def->settings_l.sprite);
     if (sfMouse_isButtonPressed(sfMouseLeft))
-        defender->settings_click = 1;
-    if (sfFloatRect_contains(&rectsettings_l, defender->cursor.pos.x, defender->cursor.pos.y)
-    && defender->event.type == sfEvtMouseButtonReleased && defender->event.mouseButton.button == sfMouseLeft) {
-        defender->settings_click = 0;
-        defender->scene = MENU;
+        def->settings_click = 1;
+    if (sfFloatRect_contains(&rs_l, def->cursor.pos.x, def->cursor.pos.y)
+    && def->event.type == sfEvtMouseButtonReleased &&
+    def->event.mouseButton.button == sfMouseLeft) {
+        def->settings_click = 0;
+        def->scene = MENU;
     }
-    change_bouton_leave_set(win, defender);
-    click_fps(win, defender);
-    bar_volume(win, defender);
+    change_bouton_leave_set(win, def);
+    click_fps(win, def);
+    bar_volume(win, def);
 }

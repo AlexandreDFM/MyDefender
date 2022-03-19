@@ -316,7 +316,8 @@ void skill_tree(game_t *game, defender_t *defender);
 void how_to_play(sfRenderWindow *win, defender_t *defender);
 void all_uninit(defender_t *defender, game_t *game);
 void settings(sfRenderWindow *win, defender_t *defender);
-void bloon_management(sfRenderWindow *win, game_t *game_s, defender_t *defender);
+void bloon_management(sfRenderWindow *win, game_t *game_s,
+defender_t *defender);
 char *my_strcat_alloc(char *dest, char const *src);
 void draw_score(sfRenderWindow *win, game_t *game, defender_t *defender);
 void fill_r_to(game_t *game);

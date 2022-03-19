@@ -14,7 +14,8 @@ void fill_bloons(game_t *game)
     while (last->next != NULL) last = last->next;
     obj->prev = last;
     obj->sprite = sfSprite_create();
-    obj->pos = (sfVector2f) {last->pos.x - 30 * last->dir.x, last->pos.y - 30 * last->dir.y};
+    obj->pos = (sfVector2f) {last->pos.x - 30 * last->dir.x,
+    last->pos.y - 30 * last->dir.y};
     sfSprite_setTexture(obj->sprite, game->t_array[2], sfTrue);
     sfSprite_setOrigin(obj->sprite, (sfVector2f) {21, 27});
     obj->dir = game->bloon->dir;
