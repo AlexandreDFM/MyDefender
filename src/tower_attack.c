@@ -24,6 +24,18 @@ void check_tower_radius(game_t *g, defender_t *defender)
                     g->monkey->blooncibled = g->bloon;
                 }
             };
+            if (g->monkey->blooncibled == g->bloon) {
+                if ((g->bloon->pos.x + g->monkey->radius / 2
+                <= g->monkey->pos.x - g->monkey->radius / 2
+                && g->bloon->pos.x - g->monkey->radius / 2
+                >= g->monkey->pos.x + g->monkey->radius / 2)
+                && (g->bloon->pos.y + g->monkey->radius / 2
+                <= g->monkey->pos.y - g->monkey->radius / 2
+                && g->bloon->pos.y - g->monkey->radius / 2
+                >= g->monkey->pos.y + g->monkey->radius / 2)) {
+                    g->monkey->blooncibled = NULL;
+                }
+            }
             g->bloon = g->bloon->next;
         }
         g->bloon = g->head;

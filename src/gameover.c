@@ -11,15 +11,17 @@ void switch_window_go(sfRenderWindow *w, defender_t *d, game_t *game)
 {
     if (d->event.mouseButton.type == sfEvtMouseButtonReleased
     && d->event.mouseButton.button == sfMouseLeft) {
-        if (d->valid[0]) {
+        if (d->valid[5]) {
             sfMusic_stop(d->menu_music);
             init_textures(d, game);
             d->scene = GAME;
         }
-        if (d->valid[1]) {
+        if (d->valid[4]) {
+            uninit_textures(d, game);
             d->scene = MENU;
         }
         if (d->valid[3]) {
+            all_uninit(d, game);
             sfRenderWindow_close(w);
         }
     }
@@ -41,7 +43,8 @@ void game_over(sfRenderWindow *w, defender_t *defender, game_t *game)
     display_rect_hb(w, game->gameoverscreen);
     is_bouton(w, defender);
     switch_window_go(w, defender, game);
-    display_bouton(w, defender->bouton[0]);
     display_bouton(w, defender->bouton[3]);
+    display_bouton(w, defender->bouton[4]);
+    display_bouton(w, defender->bouton[5]);
     sfRenderWindow_drawText(w, game->gamestate, NULL);
 }

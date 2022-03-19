@@ -48,8 +48,8 @@ enum scene_t {
 };
 
 enum difficulty_t {
-    EASY = 30,
-    NORMAL = 40,
+    EASY = 2,
+    MEDIUM = 40,
     HARD = 50,
 };
 
@@ -231,10 +231,11 @@ typedef struct pause_t {
 
 typedef struct defender {
     enum scene_t scene;
+    enum difficulty_t difficulty;
     int playing;
     int state;
     int aplay;
-    int valid[4];
+    int valid[6];
     int fps;
     int settings_click;
     int map_select;
@@ -253,12 +254,13 @@ typedef struct defender {
     go_t map_select_m[4];
     go_t map_select_bl;
     go_t map_select_br;
+    go_t map_select_d;
     go_t map_select_l;
     bouton_t map_select_go;
     r_hb_t settings_bar;
     r_hb_t htpback;
     cursor_t cursor;
-    bouton_t bouton[4];
+    bouton_t bouton[6];
     pause_t p_menu;
     sfEvent event;
     sfSoundBuffer *slashbuffer;
@@ -299,6 +301,7 @@ void select_map(sfRenderWindow *w, defender_t *defender, game_t *game);
 void tower_attack(game_t *game, defender_t *defender);
 void check_thud_hb(sfRenderWindow *w, game_t *g, defender_t *d);
 void tower_node(sfRenderWindow *w, game_t *game, defender_t *defender);
+void game_win(sfRenderWindow *w, defender_t *defender, game_t *game);
 void d_tower_hitbox(sfRenderWindow *w, game_t *game, defender_t *defender);
 r_hb_t c_r_hitbox(sfVector2f pos, sfIntRect rect, sfVector2f size, sfColor c);
 c_hb_t c_c_hitbox(sfVector2f pos, float radius, sfVector2f size, sfColor c);

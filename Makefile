@@ -24,6 +24,7 @@ SRC    = main.c								\
 		src/menu.c							\
 		src/game.c							\
 		src/gameover.c						\
+		src/gamewin.c						\
 		src/init_defender.c					\
 		src/init_game_1.c					\
 		src/uninit_defender.c				\

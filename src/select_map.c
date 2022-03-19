@@ -75,6 +75,37 @@ void change_map(sfRenderWindow *win, defender_t *d)
     }
 }
 
+void click_difficulty(sfRenderWindow *win, defender_t *defender)
+{
+    sfFloatRect box1 = (sfFloatRect) {314, 783, 57, 56};
+    sfFloatRect box2 = (sfFloatRect) {314 + 57 + 372, 783, 57, 56};
+    sfFloatRect box3 = (sfFloatRect) {314 + 57 + 372 + 57 + 465, 783, 57, 56};
+    if (sfFloatRect_contains(&box1, defender->cursor.pos.x, defender->cursor.pos.y)
+    && defender->event.type == sfEvtMouseButtonReleased && defender->event.mouseButton.button == sfMouseLeft) {
+        if (defender->settings_click == 1) {
+            defender->map_select_d.pos = (sfVector2f) {314, 783};
+            defender->difficulty = EASY;
+            defender->settings_click = 0;
+        }
+    }
+    if (sfFloatRect_contains(&box2, defender->cursor.pos.x, defender->cursor.pos.y)
+    && defender->event.type == sfEvtMouseButtonReleased && defender->event.mouseButton.button == sfMouseLeft) {
+        if (defender->settings_click == 1) {
+            defender->map_select_d.pos = (sfVector2f) {314 + 57 + 372, 783};
+            defender->difficulty = MEDIUM;
+            defender->settings_click = 0;
+        }
+    }
+    if (sfFloatRect_contains(&box3, defender->cursor.pos.x, defender->cursor.pos.y)
+    && defender->event.type == sfEvtMouseButtonReleased && defender->event.mouseButton.button == sfMouseLeft) {
+        if (defender->settings_click == 1) {
+            defender->map_select_d.pos = (sfVector2f) {314 + 57 + 372 + 57 + 465, 783};
+            defender->difficulty = HARD;
+            defender->settings_click = 0;
+        }
+    }
+}
+
 void select_map(sfRenderWindow *w, defender_t *defender, game_t *game)
 {
     if (sfMusic_getStatus(defender->menu_music) == 0)
@@ -86,6 +117,7 @@ void select_map(sfRenderWindow *w, defender_t *defender, game_t *game)
         display_go(w, defender->map_select_m[i]);
     display_go(w, defender->map_select_bl);
     display_go(w, defender->map_select_br);
+    display_go(w, defender->map_select_d);
     display_bouton(w, defender->map_select_go);
     sfFloatRect rectmapselect_l = sfSprite_getGlobalBounds(defender->map_select_l.sprite);
     if (sfMouse_isButtonPressed(sfMouseLeft))
@@ -99,12 +131,12 @@ void select_map(sfRenderWindow *w, defender_t *defender, game_t *game)
     change_bouton_lr(w, defender);
     change_bouton_go(w, defender);
     change_bouton_leave_sm(w, defender);
+    click_difficulty(w, defender);
     if (sfFloatRect_contains(&rectmapselect_go, defender->cursor.pos.x, defender->cursor.pos.y)
     && defender->event.type == sfEvtMouseButtonReleased && defender->event.mouseButton.button == sfMouseLeft) {
         defender->settings_click = 0;
         sfMusic_stop(defender->menu_music);
         init_textures(defender, game);
-        my_printf("%d\n", defender->map_select);
         defender->scene = GAME;
     }
     if (defender->event.type == sfEvtMouseButtonReleased && defender->event.mouseButton.button == sfMouseLeft)

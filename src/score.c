@@ -15,6 +15,11 @@ void draw_score(sfRenderWindow *win, game_t *game, defender_t *defender)
         (sfVector2f) {775, 270}, "GAME OVER", 100);
         defender->scene = GAMEOVER;
     }
+    if ((defender->playing != 1 || defender->aplay == 1) && defender->scene != GAMEWIN && game->wave_nb >= defender->difficulty + defender->aplay) {
+        game->gamestate = create_text(game->font,
+        (sfVector2f) {775, 270}, "GAME WIN", 100);
+        defender->scene = GAMEWIN;
+    }
     sfText_setString(game->sc, my_itoa(game->money));
     sfText_setString(game->h, my_itoa(game->health));
     sfText_setString(game->wav, my_strcat_alloc("Wave : ",

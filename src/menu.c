@@ -11,7 +11,7 @@ void is_bouton(sfRenderWindow *window, defender_t *defender)
 {
     float posmousex = sfMouse_getPositionRenderWindow(window).x;
     float posmousey = sfMouse_getPositionRenderWindow(window).y;
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 6; i++) {
         sfFloatRect b = {defender->bouton[i].pos.x, defender->bouton[i].pos.y,
         defender->bouton[i].rect.width * defender->bouton[i].resize.x,
         defender->bouton[i].rect.height * defender->bouton[i].resize.y};
