@@ -7,3 +7,13 @@ You can place a monkey were you want if it's logical, not on the road, or trees.
 Bloons follow the road, if they arrives to the end of the road you lost a live.
 If you have no more life, you have lost.
 Be the best Monkey by killing all the bloons !
+
+Tower Prices :
+
+DART_MONKEY: 170;
+TACK_SHOOTER : 240;
+NINJA_MONKEY: 425;
+BOMB_SHOOTER : 445;
+ICE_MONKEY : 425;
+GLUE_GUNNER : 235;
+SUPER_MONKEY : 2125;
