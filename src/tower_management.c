@@ -37,7 +37,6 @@ void monkey_management_2(sfRenderWindow *w, game_t *game, defender_t *d)
     d->cursor.pos.y) && sfMouse_isButtonPressed(sfMouseLeft)) {
         char **stats = my_strtwa(game->tower_stats[tower(game->monkey->type)
         == 0 ? 1 : tower(game->monkey->type) * 9 + 1], "|");
-        printf(stats[19]);
         game->money += my_atoi(stats[20]) * 90 / 100;
         my_free_array(stats);
         sfSound_play(d->towerdl);
