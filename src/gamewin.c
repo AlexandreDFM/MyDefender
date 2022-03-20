@@ -12,7 +12,7 @@ void switch_window_win(sfRenderWindow *w, defender_t *d, game_t *game)
     if (d->event.mouseButton.type == sfEvtMouseButtonReleased
     && d->event.mouseButton.button == sfMouseLeft) {
         if (d->valid[5]) {
-            sfMusic_stop(d->menu_music);
+            sfMusic_stop(d->m_music);
             init_textures(d, game);
             d->scene = GAME;
         }
@@ -21,7 +21,6 @@ void switch_window_win(sfRenderWindow *w, defender_t *d, game_t *game)
             d->scene = MENU;
         }
         if (d->valid[3]) {
-            all_uninit(d, game);
             sfRenderWindow_close(w);
         }
     }
@@ -29,8 +28,8 @@ void switch_window_win(sfRenderWindow *w, defender_t *d, game_t *game)
 
 void game_win(sfRenderWindow *w, defender_t *defender, game_t *game)
 {
-    if (sfMusic_getStatus(defender->game_music) == 0)
-        sfMusic_play(defender->game_music);
+    if (sfMusic_getStatus(defender->g_music) == 0)
+        sfMusic_play(defender->g_music);
     sfRenderWindow_drawSprite(w, game->map, NULL);
     bloon_management(w, game, defender);
     sfRenderWindow_drawSprite(w, game->hud, NULL);

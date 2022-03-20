@@ -7,7 +7,7 @@
 
 #include "my_defender.h"
 
-void uninit_textures_2(game_t *game)
+void uninit_textures_3(game_t *game)
 {
     sfFont_destroy(game->font);
     sfClock_destroy(game->c);
@@ -15,6 +15,18 @@ void uninit_textures_2(game_t *game)
     sfText_destroy(game->sc);
     sfText_destroy(game->wav);
     game->cleared = 1;
+}
+
+void uninit_textures_2(game_t *game)
+{
+    sfSprite_destroy(game->hud);
+    sfSprite_destroy(game->map);
+    sfSprite_destroy(game->up_gui);
+    for (int i = 0; i < 2; i++)
+        sfSprite_destroy(game->p_but[i].sprite);
+    sfImage_destroy(game->map_c);
+    free(game->colors);
+    free(game->dirs);
 }
 
 void uninit_textures(defender_t *defender, game_t *game)
@@ -32,13 +44,6 @@ void uninit_textures(defender_t *defender, game_t *game)
         sfTexture_destroy(game->t_array[j]);
     my_free_array(array);
     my_free_array(game->tower_stats);
-    sfSprite_destroy(game->hud);
-    sfSprite_destroy(game->map);
-    sfSprite_destroy(game->up_gui);
-    for (int i = 0; i < 2; i++)
-        sfSprite_destroy(game->p_but[i].sprite);
-    sfImage_destroy(game->map_c);
-    free(game->colors);
-    free(game->dirs);
     uninit_textures_2(game);
+    uninit_textures_3(game);
 }

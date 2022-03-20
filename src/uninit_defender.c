@@ -16,8 +16,8 @@ void uninit3(defender_t *defender)
 void uninit2(defender_t *defender)
 {
     sfRectangleShape_destroy(defender->p_menu.fade);
-    sfMusic_destroy(defender->menu_music);
-    sfMusic_destroy(defender->game_music);
+    sfMusic_destroy(defender->m_music);
+    sfMusic_destroy(defender->g_music);
     sfSoundBuffer_destroy(defender->slashbuffer);
         sfSound_destroy(defender->slash);
     for (int i = 0 ; i < 4; i++) {

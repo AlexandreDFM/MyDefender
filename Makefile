@@ -17,7 +17,9 @@ SRC    = main.c								\
 		src/create.c						\
 		src/create_2.c						\
 		src/create_node.c					\
+		src/change_volume.c					\
 		src/cursor.c						\
+		src/click_fps.c						\
 		src/defender.c						\
 		src/display.c						\
 		src/debug.c							\
@@ -26,7 +28,12 @@ SRC    = main.c								\
 		src/gameover.c						\
 		src/gamewin.c						\
 		src/init_defender.c					\
-		src/init_game_1.c					\
+		src/init_defender_menus.c			\
+		src/init_defender_music.c			\
+		src/init_defender_pause.c			\
+		src/init_game.c						\
+		src/ig_buttons.c					\
+		src/init_game_2.c					\
 		src/uninit_defender.c				\
 		src/uninit_game_1.c					\
 		src/intro.c							\
@@ -37,10 +44,14 @@ SRC    = main.c								\
 		src/pause.c							\
 		src/skill_tree.c					\
 		src/select_map.c					\
+		src/select_map2.c					\
+		src/tower_management.c				\
 		src/tower_nodes.c					\
+		src/tower_nodes2.c					\
 		src/tower_hitbox.c					\
 		src/check_towers_placement.c		\
 		src/tower_attack.c					\
+		src/tower_attack_2.c				\
 		src/how_to_play.c					\
 		src/settings.c						\
 		src/score.c							\

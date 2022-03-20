@@ -15,7 +15,7 @@ void init_textures5(game_t *game)
     game->bloon = game->head;
     game->font = sfFont_createFromFile("font/font.ttf");
     game->money = 650;
-    game->health = 1;
+    game->health = 100;
     game->c = sfClock_create();
     game->h = sfText_create();
     game->h = create_text(game->font, (sfVector2f) {1570, 93}, "0", 48);
@@ -107,13 +107,6 @@ void init_textures(defender_t *defender, game_t *g)
         t_array[j] = sfTexture_createFromFile(array[j], NULL);
     g->t_array = t_array;
     my_free_array(array);
-    g->tower_stats = my_strtwa(get_lines("./parsing/tower_stats.txt"), "\n");
-    g->monkey = NULL;
-    g->monkey_head = NULL;
-    g->t_monkey = sfTexture_createFromFile("./sprites/all_monkey.png", NULL);
-    fill_hudtowers(g);
-    fill_r_to(g);
-    g->gameoverscreen = c_r_hitbox((sfVector2f) {0, 0}, (sfIntRect)
-    {0, 0, 1920, 1029}, (sfVector2f) {1, 1}, (sfColor) {0, 0, 0, 100});
+    init_special(defender, g);
     init_textures2(defender, g);
 }

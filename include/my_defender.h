@@ -48,7 +48,7 @@ enum scene_t {
 };
 
 enum difficulty_t {
-    EASY = 2,
+    EASY = 30,
     MEDIUM = 40,
     HARD = 50,
 };
@@ -240,8 +240,11 @@ typedef struct defender {
     int settings_click;
     int map_select;
     int volume_buf;
+    int v_buf_save;
     int volume_buf2;
-    int volume_music;
+    int v_buf2_save;
+    int v_music;
+    int v_save;
     go_t intro;
     go_t title;
     go_t menu;
@@ -273,14 +276,23 @@ typedef struct defender {
     sfSound *towertk;
     sfSound *towerpl;
     sfSound *towerdl;
-    sfMusic *menu_music;
-    sfMusic *game_music;
+    sfMusic *m_music;
+    sfMusic *g_music;
     sfFont *font;
     sfText *help_txt;
     sfClock *clockintro;
 }defender_t;
 
 void load_window();
+defender_t init_map_select2(defender_t d);
+defender_t init_menu_boutons(defender_t defender);
+defender_t init_map_select1(defender_t d);
+defender_t init_htp(defender_t d);
+defender_t init_settings(defender_t d);
+defender_t condition_init(defender_t d, int i, int *indx, int indy);
+defender_t init_music1(defender_t d);
+defender_t init_music2(defender_t d);
+defender_t init_music3(defender_t d);
 int tower(int mode);
 defender_t init(void);
 defender_t init(void);
@@ -302,7 +314,9 @@ void tower_attack(game_t *game, defender_t *defender);
 void check_thud_hb(sfRenderWindow *w, game_t *g, defender_t *d);
 void tower_node(sfRenderWindow *w, game_t *game, defender_t *defender);
 void game_win(sfRenderWindow *w, defender_t *defender, game_t *game);
+void monkey_management(sfRenderWindow *w, game_t *game, defender_t *d);
 void d_tower_hitbox(sfRenderWindow *w, game_t *game, defender_t *defender);
+void init_special(defender_t *defender, game_t *g);
 r_hb_t c_r_hitbox(sfVector2f pos, sfIntRect rect, sfVector2f size, sfColor c);
 c_hb_t c_c_hitbox(sfVector2f pos, float radius, sfVector2f size, sfColor c);
 monkey_t *first_monkey(game_t *game, defender_t *defender, sfVector2f pos);
@@ -357,3 +371,13 @@ void ig_but(game_t *game, defender_t *defender, sfRenderWindow *win);
 void game(sfRenderWindow *win, game_t *game_s, defender_t *defender);
 void pause_f(sfRenderWindow *window, defender_t *defender, game_t *game);
 go_t create_go(char *tpath, sfVector2f pos, sfIntRect hitbox, sfVector2f size);
+void change_bouton_go(sfRenderWindow *window, defender_t *defender);
+void change_bouton_leave_sm(sfRenderWindow *w, defender_t *d);
+void change_bouton_lr(sfRenderWindow *win, defender_t *d);
+void change_map(sfRenderWindow *win, defender_t *d);
+void monkey_up_display(sfRenderWindow *w, game_t *game, defender_t *defender);
+void monkey_upgrade(game_t *game, defender_t *defender, monkey_t *obj);
+void check_tower_radius(game_t *g, defender_t *defender);
+void click_fps(sfRenderWindow *win, defender_t *def);
+void bar_volume(sfRenderWindow *win, defender_t *def);
+

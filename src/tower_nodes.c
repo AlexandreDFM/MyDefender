@@ -25,6 +25,8 @@ void add_icons_2(game_t *game, defender_t *d, monkey_t *obj, char **stats)
     sfRectangleShape_setSize(obj->hitbox_sell.shape,
     (sfVector2f) {obj->hitbox_sell.rect.width, obj->hitbox_sell.rect.height});
     sfRectangleShape_setPosition(obj->hitbox_sell.shape, obj->hitbox_sell.pos);
+    obj->type = d->cursor.t_to;
+    monkey_upgrade(game, d, obj);
 }
 
 void add_icons(game_t *game, defender_t *defender, monkey_t *obj)

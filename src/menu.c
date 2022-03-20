@@ -46,58 +46,12 @@ void switch_window(sfRenderWindow *window, defender_t *defender, game_t *game)
 
 void menu(sfRenderWindow *window, defender_t *defender, game_t *game)
 {
-    if (sfMusic_getStatus(defender->menu_music) == 0)
-        sfMusic_play(defender->menu_music);
+    if (sfMusic_getStatus(defender->m_music) == 0)
+        sfMusic_play(defender->m_music);
     display_go(window, defender->menu);
     display_go(window, defender->title);
     is_bouton(window, defender);
     switch_window(window, defender, game);
     for (int i = 0; i < 4; i++)
         display_bouton(window, defender->bouton[i]);
-}
-
-void ig_but(game_t *g, defender_t *defender, sfRenderWindow *win)
-{
-    sfVector2i pos = sfMouse_getPositionRenderWindow(win);
-    defender->cursor.pos.x = pos.x;
-    defender->cursor.pos.y = pos.y;
-    for (int i = 0; i < 2; i++) {
-        sfFloatRect rect = sfSprite_getGlobalBounds(g->p_but[i].sprite);
-        if (sfFloatRect_contains(&rect, pos.x, pos.y)) {
-            g->p_but[i].clicked = 1;
-            sfSprite_setScale(g->p_but[i].sprite, (sfVector2f) {0.6, 0.6});
-        } else {
-            g->p_but[i].clicked = 0;
-            sfSprite_setScale(g->p_but[i].sprite, (sfVector2f) {0.5, 0.5});
-        }
-        if (g->p_but[i].clicked == 1 &&
-        sfMouse_isButtonPressed(sfMouseLeft) &&
-        defender->playing == 0 && i == 0) {
-            if (defender->state == 4) fill_waves(g);
-            defender->state = 1;
-            defender->playing = 1;
-            g->p_but[i].rect.left = (g->ff == 1) ? 126 : 252;
-            sfSprite_setTextureRect(g->p_but[i].sprite, g->p_but[i].rect);
-        }
-        if (g->p_but[i].clicked == 1 && sfMouse_isButtonPressed(sfMouseLeft)
-        && defender->playing == 1 && defender->state == 0 && i == 0) {
-            defender->state = 3;
-        }
-        if (g->p_but[i].clicked == 1 && sfMouse_isButtonPressed(sfMouseLeft)
-        && defender->state == 0 && i == 1) {
-            defender->scene = PAUSE;
-        }
-        if (defender->state != 0 && defender->event.type ==
-        sfEvtMouseButtonReleased &&
-        defender->event.mouseButton.button == sfMouseLeft) {
-            if (defender->state == 3) {
-                g->ff = (g->ff == 1 && defender->playing == 1) ? 2 : 1;
-                g->p_but[i].rect.left =
-                (g->p_but[i].rect.left == 126) ? 252 : 126;
-                sfSprite_setTextureRect(g->p_but[i].sprite,
-                g->p_but[i].rect);
-            }
-            defender->state = 0;
-        }
-    }
 }

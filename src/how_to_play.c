@@ -24,7 +24,7 @@ void switch_window_2(sfRenderWindow *window, defender_t *def)
     if (def->event.mouseButton.type == sfEvtMouseButtonReleased
     && def->event.mouseButton.button == sfMouseLeft) {
         if (def->valid[0]) {
-            sfMusic_stop(def->menu_music);
+            sfMusic_stop(def->m_music);
             def->scene = GAME;
         }
         if (def->valid[1]) {
@@ -41,8 +41,8 @@ void switch_window_2(sfRenderWindow *window, defender_t *def)
 
 void how_to_play(sfRenderWindow *win, defender_t *def)
 {
-    if (sfMusic_getStatus(def->menu_music) == 0)
-        sfMusic_play(def->menu_music);
+    if (sfMusic_getStatus(def->m_music) == 0)
+        sfMusic_play(def->m_music);
     display_go(win, def->menu);
     display_rect_hb(win, def->htpback);
     sfRenderWindow_drawText(win, def->help_txt, NULL);

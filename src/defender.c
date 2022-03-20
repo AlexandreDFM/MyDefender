@@ -62,7 +62,7 @@ void load_window(void)
     game.cleared = 1;
     char *name = "My_defender Project";
     window = sfRenderWindow_create(mode, name, sfResize | sfClose, NULL);
-    sfRenderWindow_setFramerateLimit(window, 300);
+    sfRenderWindow_setFramerateLimit(window, 60);
     sfRenderWindow_setMouseCursorVisible (window, sfFalse);
     boucle(window, &defender, &game);
     all_uninit(&defender, &game);

@@ -23,6 +23,29 @@ void p_draw(sfRenderWindow *win, defender_t *defender, game_t *game)
     sfRenderWindow_drawSprite(win, game->p_but[1].sprite, NULL);
 }
 
+void config_sound(sfRenderWindow *win, defender_t *defender, game_t *game, int i)
+{
+    defender->v_save = defender->v_music == 0 ?
+    defender->v_save : defender->v_music;
+    defender->v_buf_save = defender->volume_buf == 0 ?
+    defender->v_buf_save : defender->volume_buf;
+    defender->v_buf2_save = defender->volume_buf2 == 0 ?
+    defender->v_buf2_save: defender->volume_buf2;
+    if (i == 5) {
+        sfMusic_setVolume(defender->g_music, defender->v_music
+        == 0 ? defender->v_save : 0);
+    } else if (i == 6) {
+        sfSound_setVolume(defender->slash, defender->volume_buf
+        == 0 ? defender->v_buf_save: 0);
+        sfSound_setVolume(defender->towertk, defender->volume_buf
+        == 0 ? defender->v_buf_save: 0);
+        sfSound_setVolume(defender->towerpl, defender->volume_buf == 0 ? defender->v_buf_save: 0);
+        sfSound_setVolume(defender->towerdl, defender->volume_buf == 0 ? defender->v_buf_save: 0);
+        for (int i = 0; i < 4; i++) {
+            sfSound_setVolume(defender->popbuffer[i], defender->volume_buf2 == 0 ? defender->v_buf2_save: 0);
+        }}
+}
+
 void check_but(sfRenderWindow *win, defender_t *defender, game_t *game, int i)
 {
     switch (i) {
@@ -37,6 +60,7 @@ void check_but(sfRenderWindow *win, defender_t *defender, game_t *game, int i)
     case 4: case 5: case 6:
         if (i == 4)
             defender->aplay = defender->aplay == 1 ? 0 : 1;
+        // if (i == 5 || i == 6) config_sound(win, defender, game, i);
         defender->p_menu.pause_b[i].rect.left +=
         (defender->p_menu.pause_b[i].rect.left == 0 ||
         defender->p_menu.pause_b[i].rect.left == 252) ? 126 : -126;
