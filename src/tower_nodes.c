@@ -96,8 +96,11 @@ void add_monkey(game_t *game, defender_t *defender, sfVector2f pos)
 void delete_tower(game_t *game)
 {
     if (game->monkey == NULL) return;
-    if (game->monkey == game->monkey_head)
+    if (game->monkey == game->monkey_head && game->monkey->next != NULL) {
+        game->monkey_head = game->monkey->next;
+    } else {
         game->monkey_head = NULL;
+    }
     if (game->monkey->next != NULL)
         game->monkey->next->prev = game->monkey->prev;
     if (game->monkey->prev != NULL)

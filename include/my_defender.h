@@ -129,6 +129,7 @@ typedef struct bloons {
     sfVector2f dir;
     sfVector2f pos;
     sfSprite *sprite;
+    sfClock *clock;
     struct bloons *prev;
     struct bloons *next;
 }bloons_t;

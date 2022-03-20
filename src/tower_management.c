@@ -17,14 +17,14 @@ void bloon_management(sfRenderWindow *win, game_t *g, defender_t *defender)
             sfSprite_setPosition(g->bloon->sprite, g->bloon->pos);
             check_pos(g, win);
         }
-        if (sfClock_getElapsedTime(g->c).microseconds > 400) {
+        if (sfClock_getElapsedTime(g->bloon->clock).microseconds > 600) {
             g->bloon->pos.x += g->bloon->dir.x *
             g->bloon->speed * g->ff;
             g->bloon->pos.y += g->bloon->dir.y *
             g->bloon->speed * g->ff;
-            sfClock_restart(g->c);
-            g->bloon = g->bloon->next;
+            sfClock_restart(g->bloon->clock);
         }
+        g->bloon = g->bloon->next;
     }
 }
 
@@ -63,13 +63,13 @@ void monkey_management_3(sfRenderWindow *w, game_t *game, defender_t *d)
 
 void monkey_management(sfRenderWindow *w, game_t *game, defender_t *d)
 {
-    while (game->monkey != NULL) {
+    while (game->monkey != NULL && game->monkey_head != NULL) {
         sfRenderWindow_drawSprite(w, game->monkey->sprite, NULL);
         if (sfMouse_isButtonPressed(sfMouseLeft) &&
         d->cursor.t_to == MONKEY_SELECT
         && game->monkey->clicked == TRUE) d->cursor.t_to = NO_MONKEY;
-        monkey_management_2(w, game, d);
         monkey_management_3(w, game, d);
+        monkey_management_2(w, game, d);
         if (game->monkey != NULL)
             game->monkey = game->monkey->next;
     }
