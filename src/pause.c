@@ -31,6 +31,7 @@ void check_but(sfRenderWindow *win, defender_t *defender, game_t *game, int i)
     case 1:
         break;
     case 2:
+        sfMusic_stop(defender->g_music);
         defender->scene = MENU;
     case 3:
         break;
