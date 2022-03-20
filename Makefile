@@ -32,6 +32,7 @@ SRC    = main.c								\
 		src/init_defender_music.c			\
 		src/init_defender_pause.c			\
 		src/init_game.c						\
+		src/pause_2.c						\
 		src/ig_buttons.c					\
 		src/init_game_2.c					\
 		src/uninit_defender.c				\

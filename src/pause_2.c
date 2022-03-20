@@ -33,7 +33,7 @@ void config_sound(sfRenderWindow *win, defender_t *defender, game_t *game, int i
         sfSound_setVolume(defender->towerdl, defender->volume_buf
         == 0 ? defender->v_buf_save: 0);
         for (int i = 0; i < 4; i++) {
-            sfSound_setVolume(defender->popbuffer[i], defender->volume_buf2 ==
+            sfSound_setVolume(defender->pop[i], defender->volume_buf2 ==
             0 ? defender->v_buf2_save: 0);
         }
     }
