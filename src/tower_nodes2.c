@@ -21,7 +21,7 @@ void monkey_upgrade2(game_t *game, defender_t *defender, monkey_t *obj)
 void monkey_upgrade(game_t *game, defender_t *defender, monkey_t *obj)
 {
     obj->sell = sfText_create();
-    sfText_setString(obj->sell, "SELL");
+    sfText_setString(obj->sell, "SELL ALL !");
     sfText_setFont(obj->sell, game->font);
     sfText_setCharacterSize(obj->sell, 40);
     sfText_setPosition(obj->sell, (sfVector2f) {650, 905});
