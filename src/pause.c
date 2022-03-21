@@ -48,8 +48,7 @@ void check_but(sfRenderWindow *win, defender_t *defender, game_t *game, int i)
 void pause_buttons(sfRenderWindow *w, defender_t *d, game_t *game, int i)
 {
     sfVector2i pos = sfMouse_getPositionRenderWindow(w);
-    d->cursor.pos.x = pos.x;
-    d->cursor.pos.y = pos.y;
+    d->cursor.pos.x = pos.x, d->cursor.pos.y = pos.y;
     sfFloatRect rect =
     sfSprite_getGlobalBounds(d->p_menu.pause_b[i].sprite);
     if (sfFloatRect_contains(&rect, pos.x, pos.y)) {
@@ -67,9 +66,7 @@ void pause_buttons(sfRenderWindow *w, defender_t *d, game_t *game, int i)
     }
     if (d->state != 0 && d->event.type ==
         sfEvtMouseButtonReleased &&
-        d->event.mouseButton.button == sfMouseLeft) {
-            d->state = 0;
-    }
+        d->event.mouseButton.button == sfMouseLeft) d->state = 0;
 }
 
 void pause_f(sfRenderWindow *win, defender_t *defender, game_t *game)

@@ -134,14 +134,12 @@ typedef struct bloons {
     struct bloons *next;
 }bloons_t;
 
-typedef struct special_tower_1
-{
+typedef struct special_tower_1 {
     int damage;
     int nb_mun;
 }s_t_1_t;
 
-typedef struct special_tower_2
-{
+typedef struct special_tower_2 {
     int damage;
 }s_t_2_t;
 
@@ -284,7 +282,7 @@ typedef struct defender {
     sfClock *clockintro;
 }defender_t;
 
-void load_window();
+void load_window(void);
 defender_t init_map_select2(defender_t d);
 defender_t init_menu_boutons(defender_t defender);
 defender_t init_map_select1(defender_t d);

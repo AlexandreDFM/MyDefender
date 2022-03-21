@@ -29,7 +29,6 @@ void ig_but3(game_t *g, defender_t *defender, sfRenderWindow *win, int i)
     }
 }
 
-
 void ig_but2(game_t *g, defender_t *defender, sfRenderWindow *win, int i)
 {
     if (g->p_but[i].clicked == 1 &&
