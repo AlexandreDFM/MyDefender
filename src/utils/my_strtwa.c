@@ -45,7 +45,7 @@ char **my_alloc_array(char const *str, char *limit, char **dest)
 char **my_strtwa(char const *str, char *limit)
 {
     int nbmax = (nb_not_valid(str, limit) + 1), nby = 0, nbx = 0;
-    char **dest = malloc(sizeof(char*) * (nbmax + 1));
+    char **dest = malloc(sizeof(char *) * (nbmax + 1));
     dest[nbmax] = NULL;
     my_alloc_array(str, limit, dest);
     for (int nbc = 0; nby < nbmax - 1; nbc++, nbx++) {

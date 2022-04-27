@@ -379,4 +379,4 @@ void monkey_upgrade(game_t *game, defender_t *defender, monkey_t *obj);
 void check_tower_radius(game_t *g, defender_t *defender);
 void click_fps(sfRenderWindow *win, defender_t *def);
 void bar_volume(sfRenderWindow *win, defender_t *def);
-void config_sound(sfRenderWindow *win, defender_t *defender, game_t *game, int i);
+void config_sound(sfRenderWindow *win, defender_t *def, game_t *game, int i);

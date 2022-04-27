@@ -44,25 +44,31 @@ int tower(int mode)
     return 84;
 }
 
+void check2(defender_t *d, game_t *g, sfVector3f tmp, sfRenderWindow *w)
+{
+    int monkey = tmp.z;
+    if (sfFloatRect_contains(&g->tower_box[(int)tmp.y][(int)tmp.x],
+        d->cursor.pos.x, d->cursor.pos.y) &&
+        d->event.mouseButton.type == sfEvtMouseButtonReleased
+        && d->event.mouseButton.button == sfMouseLeft) {
+        if (tower(monkey) != 84) {
+            d->cursor.t_to = monkey;
+            d->cursor.monkey.hitbox = g->r_to[tower(monkey)];
+            sfSound_play(d->towertk);
+        }
+    } else if (d->cursor.t_to > NO_MONKEY &&
+    d->event.mouseButton.type == sfEvtMouseButtonPressed &&
+    d->event.mouseButton.button == sfMouseLeft) {
+        if (check_t_pl(g, d)) tower_node(w, g, d);
+        d->cursor.t_to = NO_MONKEY;
+    }
+}
+
 void check_thud_hb(sfRenderWindow *w, game_t *g, defender_t *d)
 {
     for (int y = 0, monkey = 1; y < 7; y++) {
         for (int x = 0; x < 2; x++, monkey++) {
-            if (sfFloatRect_contains(&g->tower_box[y][x],
-            d->cursor.pos.x, d->cursor.pos.y) &&
-            d->event.mouseButton.type == sfEvtMouseButtonReleased
-            && d->event.mouseButton.button == sfMouseLeft) {
-                if (tower(monkey) != 84) {
-                    d->cursor.t_to = monkey;
-                    d->cursor.monkey.hitbox = g->r_to[tower(monkey)];
-                    sfSound_play(d->towertk);
-                }
-            } else if (d->cursor.t_to > NO_MONKEY &&
-            d->event.mouseButton.type == sfEvtMouseButtonPressed &&
-            d->event.mouseButton.button == sfMouseLeft) {
-                if (check_t_pl(g, d)) tower_node(w, g, d);
-                d->cursor.t_to = NO_MONKEY;
-            }
+            check2(d, g, (sfVector3f) {x, y, monkey}, w);
         }
     }
 }

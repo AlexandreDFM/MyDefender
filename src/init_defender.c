@@ -11,9 +11,9 @@ sfVector2f set_pos(int i, int offset)
 {
     switch (i) {
     case 0: case 1: case 2: case 3: case 4:
-        return (sfVector2f) {518 + offset * i, 384};
+        return ((sfVector2f){518 + offset * i, 384});
     case 5: case 6: case 7:
-        return (sfVector2f) {618 + offset * (i - 4.5), 534};
+        return ((sfVector2f){618 + offset * (i - 4.5), 534});
     }
     return (sfVector2f) {0, 0};
 }

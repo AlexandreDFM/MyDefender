@@ -65,13 +65,13 @@ $(NAME): $(OBJ)
 	cp libmy.a ../
 
 clean:
-	rm -f $(OBJ)
+	@rm -f $(OBJ)
 
 fclean: clean
-	rm ../libmy.a
-	rm -f $(NAME)
+	@rm -f ../libmy.a
+	@rm -f $(NAME)
 
 re: 	fclean $(NAME)
 
 auteur:
-	echo $(USER) > auteur
+	@echo $(USER) > auteur

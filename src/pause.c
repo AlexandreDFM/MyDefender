@@ -23,7 +23,7 @@ void p_draw(sfRenderWindow *win, defender_t *defender, game_t *game)
     sfRenderWindow_drawSprite(win, game->p_but[1].sprite, NULL);
 }
 
-void check_but(sfRenderWindow *win, defender_t *defender, game_t *game, int i)
+void check_but(sfRenderWindow *win, defender_t *defender, game_t *game,int i)
 {
     switch (i) {
     case 0:
