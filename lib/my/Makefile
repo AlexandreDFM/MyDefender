@@ -74,4 +74,4 @@ fclean: clean
 re: 	fclean $(NAME)
 
 auteur:
-	@echo $(USER) > auteur
+	@echo $(USER)
